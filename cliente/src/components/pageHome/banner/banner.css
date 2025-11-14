@@ -1,0 +1,198 @@
+@media (min-width: 426px) and (max-width: 768px) {
+    .banner-conteiner .hero .hero-content h1, 
+    .banner-conteiner .hero .hero-content a {
+        font-size: 20px;
+    }
+    .banner-conteiner .featured-products {
+        padding: 15px 20px;
+        background-color: #e0a800;
+    }
+
+    .banner-conteiner .featured-products h2 {
+        font-size: 25px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    .banner-conteiner .carousel{
+        overflow-x: auto !important;            /* habilita scroll horizontal */
+        -webkit-overflow-scrolling: touch;
+
+    }
+    /* Contenedor scrollable */
+    .banner-conteiner .carousel .carousel-inner {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 15px;
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 0;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 15px;
+    }
+    .banner-conteiner .carousel .carousel-inner .product-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 15px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 15px;
+        background-color: rgba(0,0,0,0.4);
+        border-radius: 8px;
+        scroll-snap-type: x mandatory;
+    }
+    /* Cada tarjeta como bloque independiente */
+    .banner-conteiner .carousel .carousel-inner .product-grid .product-card {
+        flex: 0 0 auto;  
+        height: auto;
+        width: 220px;
+        scroll-snap-align: start;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 0.8rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .banner-conteiner .carousel .carousel-inner .product-grid .product-card img {
+        width: 100%;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .banner-conteiner .carousel .carousel-inner .product-grid .product-card h3 {
+        font-size: 16px;
+        margin: 8px 0 4px;
+    }
+
+    .banner-conteiner .carousel .carousel-inner .product-grid .product-card p {
+        font-size: 14px;
+        margin: 0 0 8px;
+    }
+
+    .banner-conteiner .carousel .carousel-inner .product-grid .btn-secondary {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}
+
+
+
+.banner-conteiner{
+    width: 100%;
+}
+.banner-conteiner img{
+    object-fit:contain;
+    width: 100%;
+}
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF; 
+    text-align: center;
+    background-color: rgba(127, 127, 127, 0.5); 
+    padding: 20px;
+}
+
+.hero-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 60px 90px;
+    border-radius: 8px;
+}
+.hero-content h1{
+    margin: 0;
+    font-size: 44px;
+    text-align: start;
+}
+.hero-content a {
+    font-size: x-large;
+    font-weight: bold;
+    background: #FFC107;
+    color: #000; 
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.hero-content a :hover {
+    background-color: #e0a800;
+}
+
+.featured-products {
+    padding: 20px 40px;
+    text-align: center;
+    margin: 0;
+    background-color: #e0a800;
+}
+
+.featured-products h2 {
+    margin: 5%;
+    font-size: 40px;
+    font-weight: bold;
+    color: #000;
+}
+.carousel{
+    width: 100%;
+    overflow: hidden;
+}
+.carousel-inner {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 20px;
+    overflow: hidden; 
+}
+.product-grid {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 15px 50px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.product-card {
+    /* flex: 1 1 220px;         */
+    width: 250px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: start;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+}
+
+.product-card img {
+    max-width: 100%;
+    max-height: auto;
+    border-radius: 8px;
+}
+
+.product-card h3{
+    color: #000;
+}
+.product-card p{
+    color: #000;
+}
+.btn-secondary {
+    background-color: #4CAF50; 
+    color: #FFFFFF; 
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #45a049; 
+}

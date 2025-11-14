@@ -1,0 +1,157 @@
+/* --- CONTENEDOR PRINCIPAL --- */
+.checkout {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    font-family: "Inter", sans-serif;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.checkout h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: #111827;
+}
+
+.checkout p {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+/* Animación entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- FORMULARIO --- */
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+legend {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+
+/* --- INPUTS --- */
+.checkout-form input{
+    width: 95%;
+    background-color: #abaaaa;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #202020;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+.checkout-form select {
+    width: 95%;
+    color: #374151;
+    background-color: rgb(171, 170, 170);
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #202020;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.checkout-form input:focus,
+.checkout-form select:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* --- INPUTS EN LÍNEA --- */
+.inline-inputs {
+    display: flex;
+    gap: 1rem;
+}
+
+.inline-inputs input {
+    flex: 1;
+}
+
+/* --- RESUMEN --- */
+.checkout-summary {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+}
+
+.checkout-summary h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #111827;
+}
+
+.checkout-summary p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #374151;
+}
+
+.checkout-summary strong {
+    font-size: 1.3rem;
+    color: #16a34a; /* verde para destacar el total */
+}
+
+/* --- BOTÓN PRINCIPAL --- */
+.btn {
+    padding: 0.9rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    border: none;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+    .checkout {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .inline-inputs {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,39 @@
+@media (min-width: 426px) and (max-width: 768px) {
+    .container{
+        padding: 1rem;
+        scale: 1;
+    }
+    .container .jumbotron #title{
+        font-size: 2rem;
+        scale: 1;
+    }
+    .container .jumbotron #lead{
+        font-size: 1.5rem;
+        scale: 1;
+        margin: 0 0 5px 0;
+        text-align: justify;
+    }
+    .container .jumbotron #description{
+        font-size: 1.5rem;
+        scale: 1;
+        text-align: justify ;
+        margin: 0;
+    }
+}
+
+.container{
+    background-color: #b6b5b5af;
+    margin: 0;
+    padding: 2rem;
+}
+.container #title{
+    color: black;
+    font-size: 4rem;
+}
+.container #lead,
+.container #description{
+    text-align: justify;
+    font-size: 2rem;
+    color: black;
+    margin-left: 15rem;
+}

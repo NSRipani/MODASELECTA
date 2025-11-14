@@ -1,0 +1,332 @@
+/* -------- Vista para 425px a 768px -------- */
+@media (min-width: 425px) and (max-width: 768px) {
+    .shop .shop-header h1{
+        margin: 0;
+        font-size: 2rem;
+    }
+    .shop .shop-header p{
+        font-size: 0.95rem;
+    }
+    .shop-container .desktop-only {
+        display: none; /* ocultamos tabla */
+    }
+
+    .shop-container .mobile-tablet-only {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .shop-container .cart-cards .cart-card {
+        display: flex;
+        gap: 1rem;
+        background: #fff;
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        align-items: center;
+    }
+
+    .shop-container .cart-cards .cart-card .cart-card-img {
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+
+    .shop-container .cart-cards .cart-card .cart-card-info {
+        flex: 1;
+    }
+
+    .shop-container .cart-cards .cart-card .cart-card-info h4 {
+        font-size: 1rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .shop-container .cart-cards .cart-card .cart-card-info p {
+        margin: 0.2rem 0;
+        font-size: 0.9rem;
+    }
+
+    .shop-container .shop-summary {
+        margin: 1.5rem 0 0 0;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+    .shop-container .shop-summary .total-amount {
+        font-size: 1.3rem;
+    }
+    .shop .shop-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: center;
+    }
+
+    .shop .shop-actions button {
+        width: 90%;
+        max-width: 320px;
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .shop .shop-footer {
+        text-align: center;
+    }
+
+    .shop .shop-footer .btn-outline {
+        width: 90%;
+        max-width: 250px;
+        padding: 0.7rem;
+    }
+}
+
+
+/* --- FONDO GENERAL --- */
+body {
+    background: linear-gradient(135deg, #bdc0c6, #6b7280); /* gris degradado elegante */
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #111;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.shop {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- HEADER --- */
+.shop-header {
+    text-align: center;
+}
+
+.shop-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: #111827;
+}
+
+.shop-header p {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+/* --- TABLA --- */
+.table-wrapper {
+    overflow-x: auto;
+}
+/* Ocultar cards en desktop */
+.mobile-tablet-only {
+    display: none;
+}
+
+/* Ocultar tabla en tablet/mobile */
+.desktop-only {
+    display: block;
+}
+.shop-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.shop-table th,
+.shop-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.shop-table th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.shop-table td {
+    font-size: 0.95rem;
+}
+
+.shop-table .empty-cart {
+    text-align: center;
+    padding: 2rem;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+
+/* --- PRODUCTOS --- */
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.product-image {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.product-name {
+    font-weight: 500;
+    color: #111827;
+}
+
+/* --- RESUMEN --- */
+.shop-summary {
+    text-align: right;
+    font-size: 1.1rem;
+}
+
+.shop-summary .total-amount {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #16a34a; /* verde */
+}
+
+
+/* --- BOTONES --- */
+.shop .shop-actions,
+.shop .shop-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    /* flex-wrap: wrap; */
+    /* width: 100%; */
+}
+
+.shop-actions button{
+    padding: 0.9rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    border: none;
+    width: 50%;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #d1d5db;
+    color: #374151;
+}
+
+.btn-outline:hover {
+    background: #f9fafb;
+}
+
+/* --- RESPONSIVE (Mobile) --- */
+/* @media (max-width: 768px) {
+    .shop {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .shop-table {
+        display: none; /* ocultar tabla 
+    }
+
+    /* Mostrar productos en formato tarjetas 
+    .table-wrapper::before {
+        content: "Productos en tu carrito:";
+        display: block;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #374151;
+    }
+
+    .cart-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .cart-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .cart-card img {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .cart-card-info {
+        flex: 1;
+    }
+
+    .cart-card-info h4 {
+        margin: 0;
+        font-size: 1rem;
+        color: #111827;
+    }
+
+    .cart-card-info p {
+        margin: 0.2rem 0;
+        font-size: 0.9rem;
+        color: #6b7280;
+    }
+    .shop-actions,
+    .shop-footer {
+        flex-wrap: wrap;
+    }
+} */
+

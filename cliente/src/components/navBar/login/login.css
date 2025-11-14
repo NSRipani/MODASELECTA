@@ -1,0 +1,145 @@
+@media (min-width: 426px) and (max-width: 768px){
+    .login-container{
+        padding: 3rem 0;
+    }
+    .login-container .login-wrapper{
+        font-size: small;
+        padding: 1rem;
+        scale: 0.9;
+        width: 50%;
+    }
+    .login-container .login-wrapper .ojo .fas {
+        cursor: pointer; 
+        position: fixed; 
+        right: -15px; 
+        top: -17px; 
+        transform: translateY(-50%); 
+    }
+    .login-container .login-wrapper .form-check{
+        justify-content: space-evenly;
+    }
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 0;
+    margin: 0;
+    min-height: 50vh;
+    overflow: hidden;
+    background-image:url('../../../src/assets/fondo.png');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.login-wrapper {
+    background: transparent; 
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+    padding: 2rem;
+    border-radius: 0.5rem; 
+    width: 25%;
+    color: #000000;
+}
+
+.login-wrapper h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: xx-large;
+}
+
+.login-wrapper .input-box {
+    margin-bottom: 1rem; 
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.login-wrapper .input-box input {
+    background-color: rgba(255, 255, 255, 0.507);
+    padding: 0.75rem 1.2rem;
+    border: 1px solid #434343;
+    border-radius: 2rem;
+    color: #000000;
+    outline: none;
+}
+.login-wrapper .input-box input::placeholder {
+    color: #000000; 
+    opacity: .5; 
+}
+
+.login-wrapper .input-box input:focus {
+    background-color: #007bff34;
+}
+
+.input-box #email, .input-box #password {
+    width: 100%;
+}
+
+.login-wrapper .input-box .fas .fa-user:hover{
+    cursor: none;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    margin-bottom: 1.5rem;
+}
+
+.form-group a {
+    color: blue;
+    text-decoration: none; 
+    font-size: 1rem;  
+    transition: color 0.3s; 
+}
+
+.login-container .login-wrapper .text-center .btn-login {
+    padding: 0.75rem 1.5rem;
+    background-color: #b7b7b7b3; /* #535454; */
+    color:#000000; 
+    border: none; 
+    border-radius: 3rem;
+    /* font-weight: bold; */
+    font-size: 1rem;
+    width: 50%;
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.login-container .login-wrapper .text-center .btn-login:hover {
+    color:#ffffff; 
+    background-color: #818182; 
+}
+
+.login-container .login-wrapper .text-center {
+    text-align: center;
+    color: black;
+}
+
+.login-container .login-wrapper .text-center-register p{
+    display: flex;
+    gap: 5px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+}
+.login-container .login-wrapper .text-center-register a{
+    color: rgb(4, 0, 255);
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.login-container .login-wrapper .ojo  {
+    font-size: 1.2rem;
+    color: #000; 
+    cursor: pointer;
+    position: absolute;
+    right: 50px;
+    top: 205px;
+    transform: translateY(-50%);
+}
+

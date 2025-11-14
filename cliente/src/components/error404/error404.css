@@ -1,0 +1,53 @@
+/* Tablet: 426px - 768px */
+@media (min-width: 426px) and (max-width: 768px) {
+    .container {
+        padding: 2rem 1rem;
+    }
+
+    .container #err404 {
+        width: 80%;        
+        height: auto;      
+        max-width: 400px; 
+    }
+
+    .container .parrafo {
+        font-size: 1.5rem; 
+        margin: 1rem 0;
+    }
+
+    .container button {
+        padding: 12px 24px;
+        font-size: 14px;
+        width: auto;      
+    }
+}
+
+
+.container{
+    background-color: rgba(116, 142, 183, 0.523);
+    text-align: center;
+    justify-content: center; 
+}
+
+#err404 {
+    padding: 3rem;
+    width: 50rem;
+    height: 50rem;
+}
+
+.container .parrafo{
+    font-size: 3rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+.container button{
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

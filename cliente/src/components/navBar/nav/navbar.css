@@ -1,0 +1,305 @@
+/* Botón burger oculto por defecto */
+.burger-btn {
+    display: none;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+    /* Ajustar el header */
+    .hd-conteiner {
+        gap: 1rem;
+        justify-content: space-between !important;
+        padding: 0.2rem 2rem !important;
+    }
+    .hd-conteiner #logo{
+        margin-right: 4px !important;
+    }
+    /* Mostrar el botón burger en tablet/móvil */
+    .burger-btn {
+        display: flex;
+        z-index: 1001;
+        color: black;
+        position: relative;
+        align-items: center;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    /* Ocultar el grupo de iconos por defecto, mostrar como menú lateral */
+    .icons-group {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 120px;
+        background: #f9f6e8;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+        box-shadow: -2px 0 8px rgba(0,0,0,0.08);
+        transition: right 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    .icons-group.show {
+        right: 0;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    .icons-group .icons #login{
+        display: flex;
+        justify-content: left;
+        margin: 30px 0 0 0;
+    }
+    .icons-group .sec-icons #register{
+        margin: 0;
+        font-size: 1.1rem;
+        display: flex;
+        justify-self: flex-start;
+    }
+    /* Apilar iconos verticalmente */
+    .icons, .sec-icons {
+        flex-direction: column;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .icons a, .sec-icons a {
+        margin-top: 0;
+        margin-bottom: 18px;
+        width: 100%;
+        text-align: left;
+        font-size: 1.1rem;
+    }
+
+    .icons .close-session {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .general {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .as {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        display: contents;
+    }
+
+    .as a {
+        padding: 0.5rem 0;
+        font-size: 1rem;
+        width: fit-content;
+        text-align: left;
+    }
+
+    .admin-dropdown {
+        width: 100%;
+    }
+
+    .admin-menu {
+        min-width: 100px;
+        left: 0;
+        top: 100%;
+    }
+
+    .profile {
+        width: 100%;
+        justify-content: flex-start;
+        font-size: 1rem;
+    }
+
+    .fa-solid {
+        font-size: 1.3rem;
+    }
+
+    
+    /* Ajuste para el carrito */
+    .cart {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 1rem;
+    }
+}
+.hd-conteiner{
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #F3F4F6;
+    padding: .2rem 5rem;
+    color: rgb(0, 0, 0);
+    transition: top 0.3s ease;
+}
+.hd-conteiner #logo {
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+.as a{
+    cursor: pointer;
+    padding: 0 1rem;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+    list-style: none;
+}
+
+.as a:hover {
+    color: #18bc9c; 
+}
+.admin-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.admin-btn {
+    display: flex;
+    padding: 0.5rem 1.45rem;
+    gap: 10px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+    list-style: none;
+    background-color: transparent;
+    border: none;
+}
+
+.admin-btn:hover{
+    background-color: #444;
+    cursor: pointer;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #18bc9c;
+}
+.rotate {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+
+.admin-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #999;
+    border: 1px solid #222;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.admin-menu:hover{
+    border: 1px solid #18bc9c;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.admin-menu a {
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    transition: background 0.3s;
+    width: auto;
+}
+
+.admin-menu a:hover {
+    background-color: #444;
+}
+.admin-menu a#order:hover {
+    background-color: #444;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.icons-group{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.icons{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.icons a{
+    cursor: pointer;
+}
+.profile{
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.profile p{
+    margin: 0;
+    color: black;
+    font-weight: bold;
+}
+.fa-solid{
+    font-size: x-large;
+    opacity: 4;
+}
+.fa-address-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.closec:hover{
+    cursor: pointer;
+}
+.icons #register, #login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+    list-style: none;
+}
+
+.fa-sign-in-alt:hover, .fa-user-plus:hover { 
+    color: #768884;
+    transition: color 0.3s; 
+    cursor: pointer;
+}
+.sec-icons{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
+}
+.sec-icons #register{
+    text-decoration: none;
+}

@@ -1,0 +1,290 @@
+@media (min-width: 426px) and (max-width: 768px) {
+    .ct-conteiner {
+        flex-direction: column;   
+        height: 100vh;            
+        overflow-y: auto;
+        background-image: url('../../../assets/fondo.png');
+        background-size: cover;
+        background-position: top; 
+        background-attachment: fixed;
+        background-repeat: no-repeat;        
+    }
+
+    .ct-conteiner .contact-container {
+        width: auto;  
+        padding: 1rem ;
+        font-size: large;
+        height: 100vh; 
+    }
+
+    .ct-conteiner .contact-container h1 {
+        width: auto;
+        font-size: 1.5rem;
+    }
+    .ct-conteiner .contact-container .formulario .nombre, 
+    .ct-conteiner .contact-container .formulario .emails, 
+    .ct-conteiner .contact-container .formulario .mensaje {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #000000;
+        margin-bottom: 1rem;
+    }
+    .ct-conteiner .contact-container .formulario input,
+    .ct-conteiner .contact-container .formulario textarea {
+        font-size: 1rem;
+    }
+
+    .ct-conteiner .contact-container .formulario button {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .ct-conteiner .info {
+        width: auto;
+        height: 100vh;
+        padding: 1rem;
+        text-align:center;
+    }
+
+    .ct-conteiner .info p {
+        font-size: 1.5rem;
+        padding: 0 0.5rem 1rem;
+    }
+
+    .ct-conteiner .info .info-contacto ul {
+        flex-wrap: wrap;          
+        gap: 40px;    
+        font-size: 50px;
+        padding: 0;
+        margin: 0;
+    }
+    .ct-conteiner  .info .suscripcion{
+        width: auto;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+    .ct-conteiner .info .suscripcion h2 {
+        padding: .5rem 0;
+        text-align: center;
+        margin: 0;
+    }
+
+    .ct-conteiner .info .suscripcion p {
+        font-size: 1.5rem;
+        text-align: left;
+        padding: 0 0.5rem 1rem ;
+    }
+
+
+    .ct-conteiner .info .suscripcion form {
+        /* flex-direction: column;   */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+        margin: 1rem 0.5rem 0;
+    }
+
+    .ct-conteiner .info .suscripcion form input[type="email"] {
+        width: 80%;
+    }
+
+    .ct-conteiner .info .suscripcion form button {
+        width: 50%;
+    }
+}
+.ct-conteiner {
+    display: flex;
+    align-items: stretch;
+    height: 100dvh;
+    overflow: hidden;
+    background-image: url('../../../assets/fondo.png');
+    background-size: cover;
+    background-position: top; 
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.contact-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    padding: 6rem 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000000;
+    font-size: xx-large;
+}
+
+.contact-container h1 {
+    text-align: center; 
+    font-size: 2rem; 
+    color: #000000; 
+    margin: 0 0 1.5rem 0;
+}
+
+.formulario {
+    width: 60%;
+}
+
+.formulario .nombre, 
+.formulario .emails, 
+.formulario .mensaje {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 1rem;
+}
+
+.contact-container input,
+.contact-container textarea {
+    display: flex;
+    padding: 8px;
+    border: 1.5px solid #434343;
+    border-radius: 5px;
+    background-color: #ffffff;
+    width: 100%;
+    font-size: medium;
+    font-weight: bold;
+    color: black;
+}
+
+textarea {
+    resize: none; 
+    height: 100px;
+}
+
+.error-message {
+    color: rgba(255, 0, 0, 0.877);
+}
+
+.contact-container input:focus,
+.contact-container textarea:focus {
+    border-color: #0056b3; 
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5); 
+}
+
+.contact-container button {
+    padding: 12px;
+    background-color: #1961ae;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s, transform 0.1s;
+    width: 60%;
+}
+
+.contact-container button:hover {
+    background-color: #0056b3; 
+}
+
+.info{
+    width: auto; 
+    max-height: auto;
+    background-color: #61606078;
+}
+
+.info p{
+    font-size: 50px;
+    color: #000000;
+    padding: 25vh 0 5vh 5%;
+    text-align: start;
+    margin: 0;
+}
+.info .info-contacto {
+    text-align: center;
+    padding: 2%;
+}
+
+.info-contacto ul {
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    gap: 100px;
+    font-size: 80px;
+    transition: transform 0.3s;
+    margin: 0;
+    width: 90%;
+    
+}
+.info-contacto ul li{
+    list-style: none;
+}
+.info-contacto ul li a {
+    display: flexbox;
+    align-items: center;
+    justify-content: center;
+}
+.info-contacto .facebook{
+    color: #3b5998;
+}
+.info-contacto .facebook,
+.info-contacto .instagram,
+.info-contacto .twitter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-contacto .instagram{
+    color: #fff;
+    background: radial-gradient(circle at 30% 30%,
+    #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    border-radius: 20px;
+}
+
+.info-contacto a:hover {
+    transform: scale(1.1); 
+}
+.suscripcion h2{
+    text-align: start;
+    padding-left: 15%;
+    color: #000000;
+    font-size: 2rem;
+}
+.suscripcion p {
+    background: none;
+    text-align: start;
+    font-size: 20px;
+    padding: 0 0 0 15%;
+}
+
+
+.suscripcion form  {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin: 2% 0 2% 15%;
+}
+
+.suscripcion form input[type="email"] {
+    padding: 10px;
+    border: 2px solid #000000;
+    width: 30%;
+    border-radius: 6px;
+    color: #000000;
+    background-color: #ffffff;
+}
+.suscripcion form button{
+    padding: 10px 10px;
+    background-color: #ebeb0b;
+    color: rgb(5, 5, 5);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: bolder;
+    transition: background-color 0.3s;
+}
+.suscripcion button:hover {
+    background-color: yellow; 
+}
+
+

@@ -1,0 +1,83 @@
+@media (min-width: 426px) and (max-width: 768px) {
+    .todo{
+        margin: 0;
+        padding: 0;
+        scale: 1;
+    }
+    .todo .navBar-conteiner {
+        scale: 1;
+    }
+    .todo .navBar-conteiner h1 {
+        font-size: 2rem;
+    }
+    .todo .navBar {
+        scale: 1;
+    }
+    .todo .navBar .btns{
+        scale: 1;
+        padding: 0.5rem;
+    }
+    .todo .navBar .btns .boton-nav {
+        font-size: 1rem;
+    }
+    .todo .navBar .btns .boton-nav #btn-gestion {
+        font-size: 1rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+.todo{
+    margin: 0;
+    padding: 0;
+}
+.navBar-conteiner {
+    background-color: #343a40;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+.navBar-conteiner h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    background-color: rgba(128, 128, 128, 0.316);
+    /* margin: 0; */
+    border-radius: 5rem;
+    /* position: relative; */
+    /* top: 30%; */
+}
+.navBar {
+    background-color: aliceblue;
+    color: black;
+}
+.btns{
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.boton-nav {
+    color: black;
+    font-family: Arial, sans-serif;
+    list-style: none;
+}
+
+#btn-gestion{
+    text-decoration: none;
+    color: black;
+    font-family: Arial, sans-serif;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#btn-gestion:hover {
+    background-color: #036ee1;
+    color: white;
+}
+#btn-gestion:active {
+    background-color: #004085;
+    color: white;
+}

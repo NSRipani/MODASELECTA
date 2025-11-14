@@ -1,0 +1,9 @@
+.title-conteiner{
+    background-color: rgba(116, 142, 183, 0.523);
+    text-align: center;
+    align-items: center;
+    padding: 4rem;
+    font-size: 4rem;
+    color: black;
+    font-family:cursive;
+}

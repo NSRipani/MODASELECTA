@@ -1,0 +1,202 @@
+.cart-sidebar {
+    cursor:auto;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 450px;
+    height: 100rch; 
+    background: #ffffff;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cart-sidebar.open {
+    right: 0;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #c1b9b9;
+    max-height: 50%;
+}
+.cart-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+.close-btn {
+    color: red;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.cart-body {
+    overflow-y: auto;
+    flex: 1; 
+    padding: 10px;
+    max-height: calc(100% - 100px); 
+}
+.cart-body::-webkit-scrollbar {
+    width: 20px;
+    background: #f1f1f1;
+}
+
+.cart-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.cart-body::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+.cart-body {
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.empty-cart {
+    text-align: center;
+    color: #777;
+}
+
+.cart-item {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    border-radius: .5rem;
+    border-bottom: 2px solid #000;
+    background-color: rgb(222, 221, 221);
+}
+.cart-item:hover {
+    background-color: rgb(205, 204, 204);
+}
+
+.item-photo {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-details h4 {
+    margin: 0.5rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+    color: black
+}
+.qty-control {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: center;
+    margin-left: 0.5rem;
+}
+.qty-control p {
+    margin: 0 0.5rem 0 0.2rem;
+    color: #000;
+}
+.quantity {
+    align-items: start;
+    text-align: center;
+    gap: 0.1rem;
+    color: #000;
+}
+.quantity p{
+    margin: 0 0.5rem;
+}
+.quantity .cant {
+    padding: 0 0.3rem;
+}
+.qty-control .quantity .mas,.qty-control .quantity .menos {
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    padding-top: 5px;
+    border-radius: 5px;
+    color: #000;
+    cursor: pointer;
+    /* font-size: 1.2rem; */
+}
+.qty-control .quantity button:hover {
+    background: #3a46ed;
+    color: #fff;
+}
+
+.remove {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #e53935;
+}
+
+
+.cart-footer {
+    text-align: center;
+    color: #000;
+    background-color: #f1f1f1;
+}
+.total {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.cart-footer .btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    padding: 0.5rem;
+}
+.checkout-btn {
+    width: 50%;
+    background: #02ba08;
+    color: white;
+    padding:  0.5rem 0.3rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.3s ease;
+}
+.checkout-btn:hover {
+    background: #007206;
+}
+.envio-gratis {
+    color: green;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.clear-btn{
+    width: 50%;
+    background: #000000;
+    color: white;
+    padding:  0.5rem 0.3rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.3s ease;
+}
+.clear-btn:hover {
+    background-color: #000000a2;
+}

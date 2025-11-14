@@ -1,0 +1,35 @@
+@media (min-width: 426px) and (max-width: 768px) {
+    .promotions-banner .promotions-text p{
+        font-size: 0.9rem;
+    }
+}
+.promotions-banner {
+    position: relative;
+    top: 0; 
+    left: 0;
+    background-color: #ffcc00;
+    color: #333;
+    padding: 5px; 
+    text-align: center; 
+    font-weight: bold; 
+    z-index: 999; 
+    overflow: hidden; 
+    transition: height 0.3s ease;
+}
+
+.promotions-text {
+    display: inline-block; 
+    animation: slide 15s linear infinite; 
+}
+.promotions-text p {
+    margin: 0;
+    padding: 0;
+}
+@keyframes slide {
+    0% {
+        transform: translateX(175%); 
+    }
+    100% {
+        transform: translateX(-175%); 
+    }
+}

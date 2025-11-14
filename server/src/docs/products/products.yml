@@ -1,0 +1,165 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtener todos los productos
+      description: Devuelve una lista completa de productos disponibles. Solo accesible para usuarios autenticados.
+      tags:
+        - Products
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Lista de productos obtenida correctamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '401':
+          description: No autorizado. El usuario debe estar autenticado.
+        '500':
+          description: Error interno del servidor.
+
+  /api/products/{id}:
+    get:
+      summary: Obtener producto por ID
+      description: Devuelve los datos de un producto específico según su ID.
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto encontrado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Producto no encontrado.
+        '500':
+          description: Error interno del servidor.
+
+    delete:
+      summary: Eliminar producto por ID
+      description: Elimina un producto específico. Solo accesible para administradores.
+      tags:
+        - Products
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del producto a eliminar
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto eliminado correctamente.
+        '403':
+          description: Acceso no autorizado (solo admin).
+        '404':
+          description: Producto no encontrado.
+        '500':
+          description: Error interno del servidor.
+
+  /api/products/create:
+    post:
+      summary: Crear un nuevo producto
+      description: Permite crear un nuevo producto. Solo accesible para administradores.
+      tags:
+        - Products
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+      responses:
+        '201':
+          description: Producto creado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Datos inválidos o campos faltantes.
+        '403':
+          description: Acceso no autorizado (solo admin).
+        '500':
+          description: Error interno del servidor.
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 6713b8a22c8b4e1f2aabef88
+        title:
+          type: string
+          example: Campera de cuero
+        description:
+          type: string
+          example: Campera negra de cuero sintético, modelo 2025.
+        category:
+          type: string
+          example: Ropa
+        price:
+          type: number
+          example: 129.99
+        stock:
+          type: integer
+          example: 20
+        photo:
+          type: string
+          example: https://cdn.example.com/products/campera.jpg
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-10-18T18:30:00Z
+
+    ProductCreate:
+      type: object
+      required:
+        - title
+        - description
+        - category
+        - price
+        - stock
+      properties:
+        title:
+          type: string
+          example: Campera de cuero
+        description:
+          type: string
+          example: Campera negra de cuero sintético, modelo 2025.
+        category:
+          type: string
+          example: Ropa
+        price:
+          type: number
+          example: 129.99
+        stock:
+          type: integer
+          example: 20
+        photo:
+          type: string
+          format: binary
+          description: Imagen del producto (archivo cargado en multipart/form-data)

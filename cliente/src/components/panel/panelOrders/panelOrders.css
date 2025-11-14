@@ -1,0 +1,295 @@
+@media (min-width: 426px) and (max-width: 768px) {
+  .order-container {
+    width: auto;
+  }
+  .order-container h1{
+    margin: 0 0 1rem !important;
+    width: auto !important;
+    font-size: 2rem !important;
+  }
+  .order-container .order-content-tasks{
+    width: auto;
+    margin: 0 ;
+  }
+  .order-container .order-content-tasks .order-filters{
+    flex-direction: column;
+    display: flex;
+    width: auto;
+    align-items: stretch;
+  }
+  .order-container .order-content-tasks .order-filters .select-search,
+  .order-container .order-content-tasks .order-filters .select-search2 {
+    display: flex;
+    width: auto;
+    margin-right: 0px;
+  } 
+  .order-container .order-content-tasks .order-filters .select-search div p{
+    font-size: 1rem;
+    margin-top: 0;
+    font-weight: bold;
+  }
+  .order-container .order-content-tasks .order-filters .select-search .btn-search{
+    flex-direction: column;
+    align-items: stretch;
+    width: auto;
+    justify-content: end;
+  }
+  .order-container .order-content-tasks .order-filters .select-search .btn-search button{
+    width: 100%;
+    height: auto;
+  }
+  .order-container .order-table {
+    width: auto;
+    margin: 0;
+  }
+  .order-container .order-table h3{
+    font-size: 1.5rem;
+    margin: 0;
+    text-align: start;
+  }
+  .order-container .order-table .order-body{
+    height: auto;
+    overflow: auto;
+  }
+  .order-container .order-table .order-body thead th{
+    font-size: 0.8rem;
+    padding: 0.5rem 0.7rem;
+  }
+  .order-container .order-table .order-body .sin-ordenes{
+    font-size: 1.5rem;
+  }
+}
+.order-container {
+  margin:0;
+  padding: 20px;
+  background-color: #b3b3b3;
+}
+.order-container h1{
+  text-align: start;
+  color: #000000;
+  margin: 20px 100px;
+  font-weight: bold;
+  font-size: 3rem;
+  border-bottom: 5px solid #242424;
+}
+.order-content-tasks{
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 100px 20px 100px;
+}
+.order-filters{
+  display: flex;
+}
+.select-search, .select-search2{
+  width: 50%;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  margin: 0 20px 20px 0px;
+  background-color: #cf843a29;
+  color: #000000;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+}
+.select-search .etiqueta{
+  display: flex;
+  gap: 10px;
+}
+.select-search .etiqueta p {
+  margin: 5px 0;
+}
+.select-search input {
+  flex: 1;
+  color: #000000;
+  background-color: white;
+  padding: 8px 14px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) saturate(100%);
+  opacity: 1;
+}
+
+input[type="date"].custom-date::-ms-expand { display: none; }
+.select-search input:focus {
+  border-color: #4c8bf5;
+  outline: none;
+}
+.select-search .btn-search{
+  display: flex;
+  align-items:last baseline;
+  gap: 10px;
+}
+.select-search .btn-search button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.select-search button:first-of-type, 
+.select-search2 button:first-of-type {
+  background: #4c8bf5;
+  color: white;
+}
+.select-search button:first-of-type:hover, 
+.select-search2 button:first-of-type:hover {
+  background: #3a6fd6;
+}
+/* Botón reset */
+.select-search button:last-of-type, 
+.select-search2 button:last-of-type {
+  background: #dee2e6;
+  color: #495057;
+}
+
+.select-search button:last-of-type:hover {
+  background: #cfd4da;
+}
+.select-search2 .btn-list, .select-search2 .btn-reset{
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  height: 30%;
+  display: flex;
+  align-items:center;
+}
+
+.order-table {
+  margin: 0 100px 20px 100px;
+  padding: 20px;
+  background-color: #cf843a29;
+  color: #000000;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+}
+
+
+.order-header {
+  margin-bottom: 15px;
+}
+
+.order-header h3 {
+  font-size: 1.5rem;
+  color: #000;
+  text-align: start;
+}
+
+/* Bordes y hover para mejor contraste */
+.order-body {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  margin-top: 1rem;
+  overflow-x: auto;
+  transition: box-shadow 0.2s;
+}
+
+.order-body:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+/* Estilo para la tabla */
+.table-orders {
+  overflow: hidden;
+  vertical-align: middle;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.table-orders thead th {
+  background-color: #333437;
+  color: white;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.order-body th, .order-body td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+  background: #cf843a29;
+}
+
+.order-body tr:last-child td {
+  border-bottom: none;
+}
+
+.order-body tr:hover {
+  background: #454545b9;
+  transition: background 0.2s;
+}
+
+.order-body ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+.order-body .prod-list li{
+  display: grid;
+  grid-template-columns:auto auto auto;
+  padding: 0;
+}
+.prod-list p{
+  margin: 0;
+  min-width: fit-content;
+  text-align: end;
+}
+.prod-list #tit{
+  text-align: left;
+}
+.order-body .sin-ordenes {
+  background-color: #cf843a29;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.order-body .btn-delete {
+  background: #ff4d4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.order-body .btn-delete:hover {
+  background: #d9363e;
+}
+
+.order-body select {
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #f5f7fa;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: border 0.2s;
+}
+.order-body .selector{
+  cursor: pointer;
+}
+.order-body .select:focus {
+  border-color: #3b82f6;
+}
+.order-body select option {
+  padding: 0.4rem 0.7rem;
+  font-size: 1rem;
+}
