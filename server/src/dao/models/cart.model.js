@@ -2,7 +2,7 @@ import { Schema, model, Types } from "mongoose";
 
 const collection = "carts";
 const cartSchema = new Schema({
-    user: { type: Types.ObjectId, ref: "users", required: true, index: true },
+    user: { type: Types.ObjectId, ref: "users", required: true, index: true, unique: true },
     products: {
         items: [
             { 
@@ -16,7 +16,6 @@ const cartSchema = new Schema({
 }, {
     timestamps: true 
 });
-
 
 
 const Cart = model(collection, cartSchema);

@@ -41,7 +41,7 @@ const Login = () => {
                             <input type="checkbox" className="form-check-input" name='remember' id="rememberMe" aria-label="Recordar mi sesión"/>   
                             <label className="form-check-label" htmlFor="rememberMe">Recordar mi sesión</label>
                         </div>
-                        <Link to={"/users/change-password"} aria-label="Cambiar contraseña">Cambiar contraseña</Link>
+                        <Link to={"/password/forgot"} aria-label="Cambiar contraseña">Cambiar contraseña</Link>
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn-login" aria-label="Iniciar Sesión">Iniciar Sesión</button>

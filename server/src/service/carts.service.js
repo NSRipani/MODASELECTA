@@ -49,18 +49,19 @@ class CartService {
             throw new Error("Error al obtener carrito: " + error.message);
         }
     }
-
+    
     async addItemToCart(id, productId, quantity = 1) {
         try{
             const cart = await cartRepository.getCartById(id);
             if (!cart) throw new Error('Carrito no encontrado');
-
+            console.log('ID PRODUCTO:', productId)
             const product = await productService.readProductId(productId);
-            console.log('PRODUCTO :', product);
+            console.log('PRODUCTO A AGREGAR:', product)
             if (!product) throw new Error('Producto no encontrado');
+
             if (product.stock === 0) throw new Error('Producto sin stock disponible');
 
-            const itemIndex = cart.products.items.findIndex(i => i.prod._id.toString() === productId);
+            const itemIndex = cart.products.items.findIndex(i => i.prod?.id.toString() === productId);
 
             if (itemIndex > -1) {
                 cart.products.items[itemIndex].quantity += quantity;
@@ -71,17 +72,17 @@ class CartService {
                     subtotal: product.price * quantity
                 });
             }
-
+            
             // Actualizar subtotales y total
             cart.products.items.forEach(item => {
-                item.subtotal = item.prod.price * item.quantity;
+                item.subtotal = product.price * item.quantity;
+                // item.subtotal = item.prod.price * item.quantity;
             });
 
             cart.total = cart.products.items.reduce((sum, item) => sum + item.subtotal, 0);
             cart.updatedAt = new Date();
 
             const updatedCart = await cartRepository.updateCart(id, cart);
-            console.log(' Carrito actualizado:', updatedCart);
 
             return CartDTO.fromEntity(updatedCart);
         } catch (error) {
@@ -205,8 +206,6 @@ class CartService {
             throw new Error('El carrito está vacío');
         }
         
-        // let totalAmount = 0;
-
         // Validar stock y descontar
         for (const item of cart.products.items) {
             const productId = item.prod._id;
@@ -226,12 +225,11 @@ class CartService {
             product.stock -= quantityToBuy;
             await prodRepository.updateProd(productId, product);
 
-            // totalAmount += product.price * quantityToBuy;
         }
 
         // Crear orden 
         const orderData = {
-            cart: cart.id
+            cart: cart._id
         };
         console.log('orderData', orderData)
 
@@ -244,23 +242,11 @@ class CartService {
         // cart.updatedAt = new Date();
         await cartRepository.updateCart(id, cart);
         
+        const clearedCart = await this.clearCart(id);
+        return { order: newOrder, cart: clearedCart };
         // await this.clearCart(id)
-        
-        return {order: newOrder}
+        // return {order: newOrder}
     }
 }
 export const cartService = new CartService();
 
-// // // ---------- CRACION, ACTUALIZACIÓN / MODIFICACIÓN ----------
-// async createCart(userId) {
-//     try {
-//         const existingCart = await this.getCartByUser(userId);
-//         if (existingCart) throw new Error("El usuario ya tiene un carrito activo.");
-//         const createdCart = await cartRepository.createCart(userId);
-        
-//         return CartDTO.fromEntity(createdCart);
-//     } catch (error) {
-//         console.log("Ocurrió un error al crear el carrito.");
-//         throw new Error('Error al crear carrito: '+ error.message);
-//     }
-// }

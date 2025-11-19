@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './changePassword.css';
 import { Toaster, toast } from 'sonner';
-import axios from 'axios';
 import { success, errorMessag } from '../message/message.jsx';
+import { useUserContext } from '../../context/userContext.jsx';
 
 const ChangePassword = () => {
     const [step, setStep] = useState(1); 
@@ -18,8 +18,7 @@ const ChangePassword = () => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
-    const ruteForgot = 'http://localhost:8000/api/password/forgot';
-    const ruteReset = 'http://localhost:8000/api/password/reset';
+    const { requestPasswordReset, resetPassword } = useUserContext();
 
     const sendCode = async (e) => {
         e.preventDefault();
@@ -29,11 +28,8 @@ const ChangePassword = () => {
         }
         setLoading(true);
         try {
-            const res = await axios.post(`${ruteForgot}`, { email: form.email });
-            if (res.status === 200) {
-                success('Si el correo existe, se envió un código de verificación.');
-                setStep(2);
-            }
+            await requestPasswordReset(form.email);
+            setStep(2);
         } catch (err) {
             errorMessag('Error al enviar el código. Intenta nuevamente.');
         } finally {
@@ -41,7 +37,7 @@ const ChangePassword = () => {
         }
     };
 
-    const resetPassword = async (e) => {
+    const handleResetPassword = async (e) => {
         e.preventDefault();
         const { email, code, newPassword } = form;
 
@@ -57,13 +53,10 @@ const ChangePassword = () => {
 
         setLoading(true);
         try {
-            const res = await axios.post(`${ruteReset}`, { email, code, newPassword });
-
-            if (res.status === 200) {
-                success('Tu contraseña fue actualizada correctamente.');
-                setForm({ email: '', code: '', newPassword: '' });
-                setStep(1);
-            }
+            await resetPassword(email, code, newPassword);
+            success('Tu contraseña fue actualizada correctamente.');
+            setForm({ email: '', code: '', newPassword: '' });
+            setStep(1);
         } catch (err) {
             errorMessag('Código inválido o expirado.');
         } finally {
@@ -90,7 +83,7 @@ const ChangePassword = () => {
                         </div>
                     </form>
                 ) : (
-                    <form onSubmit={resetPassword} className="form">
+                    <form onSubmit={handleResetPassword} className="form">
                         <div className="form-group">
                             <input type="text" className="form-control" name="code" placeholder="Código recibido" value={form.code} onChange={handleChange}  required/>
                         </div>

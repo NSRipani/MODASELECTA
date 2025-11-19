@@ -50,13 +50,14 @@ function App() {
         <Route path="/admin/orders" element={<OrderPanel />}/>
         
         {/* Usuarios */}
-        <Route path="/users/change-password" element={<ChangePassword />}/>
         <Route path="/users/login" element={<Login />}/>
         <Route path="/users/profile" element={<UserProfile />}/>
-        {/* <Route path="/users/:id/edit-profile" element={<UserProfile />}/> */}
-      
         <Route path="/users/register" element={<RegisterUser />}/>
+      
+        {/* Password */}
+        <Route path="/password/forgot" element={<ChangePassword />}/>
         
+
         {/* OTROS */}
         <Route path="*" element={<Error404 />}/>
         <Route path="/contact" element={<Contacto />}/>

@@ -71,10 +71,11 @@ export const CarroProvider = (props) => {
         try {
             const res = await axios.post(`${rute}/${id}`, { productId: product.id , quantity}, { withCredentials: true });
             if (res.status === 200) {
-                success('Producto agregado')
+                console.log('Add to Cart Response:', res.data.payload);
                 setQty(res.data.payload.products.items.map(item => ({ ...item.prod, quantity: item.quantity }))); // CANTIDAD DE PRODUCTOS
                 setItemsCart(res.data.payload.products.items); // Actualiza los productos en el carrito
                 setCart(res.data.payload); // Actualiza el estado del carrito
+                success('Producto agregado')
                 
             }
         } catch (err) {
@@ -195,5 +196,4 @@ export const CarroProvider = (props) => {
         </CarroContext.Provider>
     )
 }
-//idUser,  , setItemsCart, 
 

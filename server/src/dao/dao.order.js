@@ -7,38 +7,21 @@ class OrderDAO {
     }
 
     async getAllOrders() {
-        return await Order.find().populate('cart').lean()
-            // .populate(
-            //     {
-            //     path: 'cart',
-            //     populate: [
-                //     { path: 'user', model: 'carts', select: '_id first_name last_name email age role' },
-                //     { path: 'products.items.prod',  model: 'carts', select: 'productId title photo price quantity subtotal' }
-                // ]
-            // })
+        return await Order.find().populate('cart')
     }
 
     async getOrderById(id) {
-        return await Order.findById(id).populate('cart').lean()
-        // .populate({
-        //     path: 'cart',
-        //     populate: [
-        //         { path: 'user', model: 'carts', select: '_id first_name last_name email age role' },
-        //         { path: 'products.items.prod',  model: 'carts', select: 'productId title photo price quantity subtotal' }
-        //     ]
-        // }).exec();
+        return await Order.findById(id).populate('cart')
     }
 
     async getOrderByUser(userId) {
-        return await Order.findOne(  )//.populate('cart')
+        return await Order.findOne()
             .populate({
                 path: 'cart',
                 match: { user: userId },
                 populate: { path: 'user', select: 'first_name last_name email' }
             })
             .exec();
-        // }).exec()
-        // return await Order.find({ user: userId }).populate('cart').exec();
     }
 
 

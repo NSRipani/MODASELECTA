@@ -25,6 +25,7 @@ export const UserContextProvider = (props) => {
     const navigate = useNavigate();
     
     const rute = 'http://localhost:8000/api/users';
+    const rutePassword = 'http://localhost:8000/api/password';
     
     const id = payload?.id
 
@@ -191,18 +192,34 @@ export const UserContextProvider = (props) => {
         }
     };
     
-    // const resetPassword = async ( password, newPassword) => {
-    //     try {
-    //         const res = await axios.put(`${rute}/change-password`,
-    //             { password, newPassword },
-    //             { withCredentials: true },
-    //         );
-    //         console.log('newPassword: ', res.data)
-    //         // success('¡Has cambiado la contraseña exitosamente!');
-    //     } catch (error) {
-    //         console.error(`Error al cambiar la contraseña: ${error}`, );
-    //     }
-    // };
+    // Solicita envío de código de recuperación al email (no requiere autenticación)
+    const requestPasswordReset = async (email) => {
+        try {
+            const res = await axios.post(`${rutePassword}/forgot`, { email: email });
+            console.log('res.data', res.data.result)
+            // El backend responde siempre con un mensaje genérico por seguridad
+            success('Correo existente, se enviará un código.');
+            return res.data;
+        } catch (error) {
+            console.error('Error al solicitar reseteo de contraseña:', error);
+            errorMessag('Error al solicitar reseteo de contraseña.');
+        }
+    };
+
+    // Envía email + código + nueva contraseña para restablecer (no requiere autenticación)
+    const resetPassword = async (email, code, newPassword) => {
+        try {
+            const res = await axios.post(`${rutePassword}/reset`, { email, code, newPassword });
+            if (res.status === 200) {
+                return res.data;
+            }
+        } catch (error) {
+            console.error('Error al restablecer la contraseña:', error);
+            // const msg = error?.response?.data?.message || 'Error al restablecer la contraseña.';
+            // errorMessag(msg);
+            throw error;
+        }
+    };
 
     const changePassword = async (email, newPassword) => {
         try {
@@ -262,10 +279,10 @@ export const UserContextProvider = (props) => {
     }
 
     return (
-        <UserContext.Provider value={{ 
+            <UserContext.Provider value={{ 
                 payload, setPayload, jwt, setJwt, login, setLogin, handleLogout, 
                 
-                roles, setRoles, email, setEmail,changePassword, 
+                roles, setRoles, email, setEmail, changePassword, requestPasswordReset, resetPassword,
                 
                 handleSubmit, createUser, updateUser, deleteUser, allUser, listUser, hideUsers,
 

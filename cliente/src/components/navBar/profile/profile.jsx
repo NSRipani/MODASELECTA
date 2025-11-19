@@ -4,7 +4,6 @@ import { useOrderContext } from "../../../context/orderContext.jsx";
 import useCloseSession from "../../../hook/messageCloseSession.jsx";
 import { errorMessag, success } from "../../message/message.jsx";
 import "./profile.css";
-import { useCarroContext } from "../../../context/cartContext.jsx";
 
 const UserProfile = () => {
   const { payload, resetPassword , updateUser  } = useUserContext();

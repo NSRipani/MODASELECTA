@@ -8,7 +8,7 @@ const Shop = () => {
     const { cart, orderNew, cartUSER } = useCarroContext();
     console.log("CART EN SHOP: ", cart);
     useEffect(() => {
-        cartUSER();
+        cartUSER(cart?.user);
     }, []);
 
     const newShop = () => {
@@ -24,7 +24,7 @@ const Shop = () => {
             </header>
 
             <div className="shop-container">
-                {/* --- Vista en tabla (desktop/tablet) --- */}
+                {/* Vista en tabla (desktop) */}
                 <div className="table-wrapper desktop-only">
                     <table className="shop-table">
                         <thead>
@@ -36,8 +36,8 @@ const Shop = () => {
                             </tr>
                         </thead>
                         <tbody>
-                        {cart.products?.items?.length > 0 ? (
-                            cart.products?.items?.map((item) => (
+                        {cart && cart?.products?.items?.length > 0 ? (
+                            cart?.products?.items?.map((item) => (
                             <tr key={item.productId}>
                                 <td>
                                     <div className="product-info">
@@ -58,9 +58,9 @@ const Shop = () => {
                         </tbody>
                     </table>
                 </div>
-                {/* --- Vista en tarjetas (425px - 768px) --- */}
+                {/* Vista en tablet */}
                 <div className="cart-cards mobile-tablet-only">
-                {cart?.products?.items?.length > 0 ? (
+                {cart && cart?.products?.items?.length > 0 ? (
                     cart?.products?.items?.map((item) => (
                     <div className="cart-card" key={item.productId}>
                         <img src={item.photo} alt={item.name} className="cart-card-img"/>
@@ -80,7 +80,7 @@ const Shop = () => {
                 <div className="shop-summary">
                     <p>
                         <strong>Total:</strong>{" "}
-                        <span className="total-amount">$ {cart.total?.toFixed(2)}</span>
+                        <span className="total-amount">$ {cart?.total?.toFixed(2)}</span>
                     </p>
                 </div>
             </div>

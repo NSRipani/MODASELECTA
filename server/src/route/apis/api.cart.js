@@ -6,14 +6,12 @@ import { roleAuth } from './../../middleware/roleUser.js';
 
 const cartsRouter = Router()
 
-// cartsRouter.use(passportCall('current'))
 
 cartsRouter.get("/", cartsController.readAll) 
 cartsRouter.get("/user/:userId", checkAuthCookies, cartsController.getCart) 
 cartsRouter.get("/:id", checkAuthCookies, cartsController.readID) 
 
-// cartsRouter.post("/", checkAuthCookies, cartsController.createCart) // CREAR CARRITO
-cartsRouter.post("/:id", cartsController.addProd) // AGREGAR PRODUCTOS
+cartsRouter.post("/:id", passportCall('current'), roleAuth(['user']), checkAuthCookies, cartsController.addProd) 
 cartsRouter.post("/finalize/:id", passportCall('current'), roleAuth(['user']), checkAuthCookies, cartsController.finalizePurchase) 
 
 cartsRouter.patch('/:id/product/:productId/decrease', passportCall('current'), roleAuth(['user']), checkAuthCookies, cartsController.decrementQty);

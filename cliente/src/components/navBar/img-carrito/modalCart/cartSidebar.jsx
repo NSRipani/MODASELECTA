@@ -24,7 +24,7 @@ const CartSidebar = () => {
                 <button onClick={() => setIsOpen(false)} className="close-btn">✖</button>
             </div>
             <div className="cart-body">
-            {itemsCart && itemsCart.length > 0 ? (
+            {itemsCart && itemsCart?.length > 0 ? (
                 itemsCart?.map((items) => (
                     <div key={items?.productId} className="cart-item">
                         <img src={items?.photo} alt={items?.name} className="item-photo" />
@@ -41,7 +41,7 @@ const CartSidebar = () => {
                                 <p><strong>Subtotal:</strong> ${items.subtotal.toFixed(2)}</p>
                             </div>
                         </div>
-                        <button className="remove" onClick={() => removeFromCart(items?.productId)}>🗑️</button>
+                        <button className="remove" onClick={() => removeFromCart(items.productId)}>🗑️</button>
                     </div>
                 ))
             ) : (

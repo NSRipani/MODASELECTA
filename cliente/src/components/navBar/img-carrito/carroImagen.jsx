@@ -13,7 +13,7 @@ const Carrito = () => {
     const isLoggedIn = !!payload; // Si hay payload, usuario logueado
 
     const item = itemsCart?.length
-
+    console.log('ITEMCART:', item)
     useEffect(() => {
         if ( idUser && payload.role !== 'admin'){
             cartUSER(idUser);

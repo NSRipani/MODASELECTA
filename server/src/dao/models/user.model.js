@@ -1,4 +1,3 @@
-// se crea el model de como se guardan los datos
 import { Schema, model, Types } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2'
 
@@ -10,7 +9,7 @@ const schema = new Schema({
     age: {type: Number },
     password: { type: String },
     role: { type: String, default: "user", enum: ["user", "admin"] },
-    cart: { type: Types.ObjectId, ref: "carts", require: true }
+    cart: { type: Types.ObjectId, ref: "carts", require: true, index: true },
 },{ 
     versionKey: false, 
     timestamps: true 

@@ -46,34 +46,13 @@ class CartController {
             next(error);
         }
     }
-    // async getCart(req, res, next) {
-    //     try {
-    //         const userId = req.user?.id;
-    //         const cart = await cartService.getCartByUser(userId);
-    //         res.status(200).json({ success: 'Carrito encontrado', payload: cart });
-    //     } catch (error) {
-    //         next(error);
-    //     }
-    // }
 
-    // CREAR CARRITO POR ID DE USUARIO
-    // async createCart(req, res, next) {
-    //     try {
-    //         const userId = req.user?.id;
-    //         if (!userId) return res.status(401).json({ error: 'Usuario no autenticado' });
-
-    //         const cart = await cartService.createCart(userId);
-    //         res.status(201).json({ success: 'Carrito creado', payload: cart });
-    //     } catch (error) {
-    //         next(error);
-    //     }
-    // }
     // Agregar producto al carrito de un usuario
-    async addProd(req, res, next) { // ok
+    async addProd(req, res, next) { 
         try {
             const { id } = req.params;
             const { productId, quantity }  = req.body;
-
+            
             const add = await cartService.addItemToCart(id, productId, quantity);
             if (!add) {
                 logger.warn('productId is required to add a product to the cart');
@@ -81,7 +60,7 @@ class CartController {
             }
             logger.info(`Product ID ${productId} added to cart ID ${id} successfully`);
 
-            res.json({ success: "Added product", payload: add });
+            res.status(200).json({ success: "Added product", payload: add });
         } catch (error) {
             logger.error('Error adding product to cart');
             return next(error);

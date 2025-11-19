@@ -23,7 +23,8 @@ winston.addColors({
     http: "green",
     debug: "white"
 });
-const logDir = path.join(process.cwd(), 'server', 'src', 'utils', 'logs');
+
+const logDir = path.join(process.cwd(),'src','utils', 'logs');
 if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
 
 const logFormat = winston.format.printf(({ timestamp, level, message, stack }) => {
