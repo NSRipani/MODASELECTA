@@ -29,8 +29,16 @@ const UserProfile = () => {
 
   useEffect(() => {
     getOrders();
-    setFormData(payload);
-  }, []);
+    // Inicializar formData cuando el payload esté disponible
+    if (payload) {
+      setFormData({
+        first_name: payload?.first_name || "",
+        last_name: payload?.last_name || "",
+        email: payload?.email || "",
+        age: payload?.age || ""
+      });
+    }
+  }, [payload]);
 
   const confirmLogout = useCloseSession();
 
@@ -149,16 +157,16 @@ const UserProfile = () => {
                 <h2>Editar Perfil</h2>
                 <form onSubmit={handleSaveProfile}>
                   <label htmlFor="first_name">Nombre</label>
-                  <input id="first_name" type="text" name="first_name" value={formData.first_name} onChange={handleInputChange} />
+                  <input id="first_name" type="text" name="first_name" value={formData?.first_name ?? ""} onChange={handleInputChange} />
 
                   <label htmlFor="last_name">Apellido</label>
-                  <input id="last_name" type="text" name="last_name" value={formData.last_name} onChange={handleInputChange} />
+                  <input id="last_name" type="text" name="last_name" value={formData?.last_name ?? ""} onChange={handleInputChange} />
 
                   <label htmlFor="email">Email</label>
-                  <input id="email" type="email" name="email" placeholder="ejemplo@gmail.com" value={formData.email} onChange={handleInputChange} />
+                  <input id="email" type="email" name="email" placeholder="ejemplo@gmail.com" value={formData?.email ?? ""} onChange={handleInputChange} />
 
                   <label htmlFor="age">Edad</label>
-                  <input id="age" type="number" name="age" value={formData.age || ""} onChange={handleInputChange} />
+                  <input id="age" type="number" name="age" value={formData?.age ?? ""} onChange={handleInputChange} />
                   
                   <div className='change-password'>
                     {/* <p>(*) Datos obligatorios </p> */}
