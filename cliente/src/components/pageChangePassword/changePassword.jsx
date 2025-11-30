@@ -92,8 +92,8 @@ const ChangePassword = () => {
                             <input type={viewPassword ? 'text' : 'password'} className="form-control" name="newPassword" placeholder="Nueva contraseña" value={form.newPassword} onChange={handleChange} required/>
                         </div>
 
-                        <div className="password1">
-                            <i className={`fas ${viewPassword ? 'fa-eye' : 'fa-eye-slash'} toggle-password-icon`} onClick={toggleViewPassword} aria-label={viewPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} role="button" tabIndex="0"></i>
+                        <div className="password3">
+                            <i id='p3' className={`fas ${viewPassword ? 'fa-eye' : 'fa-eye-slash'} toggle-password-icon`} onClick={toggleViewPassword} aria-label={viewPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} role="button" tabIndex="0"></i>
                         </div>
 
                         <div className="boton-center">

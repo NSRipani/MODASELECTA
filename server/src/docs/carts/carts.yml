@@ -1,0 +1,161 @@
+paths:
+  /api/carts/:
+    get:
+      summary: Obtener todos los carritos
+      description: Devuelve una lista completa de carritos.
+      tags:
+        - Carts
+      responses:
+        '200':
+          description: Lista de carritos obtenida correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartsListResponse'
+        '500':
+          description: Error interno del servidor.
+
+  /api/carts/{id}:
+    get:
+      summary: Obtener carrito por ID
+      description: Devuelve los datos de un carrito específico según su ID.
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Carrito encontrado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartReadResponse'
+        '401':
+          description: No autorizado. El usuario debe estar autenticado.
+        '404':
+          description: Carrito no encontrado.
+        '500':
+          description: Error interno del servidor.
+
+  /api/carts/user/{userId}:
+    get:
+      summary: Obtener carrito por ID de usuario
+      description: Devuelve el carrito asociado a un usuario. Requiere autenticación (cookie).
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Carrito del usuario encontrado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCartResponse'
+        '401':
+          description: No autorizado. El usuario debe estar autenticado.
+        '404':
+          description: Carrito no encontrado.
+        '500':
+          description: Error interno del servidor.
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+
+  schemas:
+    CartItem:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: 6713b8a22c8b4e1f2aabef88
+        name:
+          type: string
+          example: Campera de cuero
+        photo:
+          type: string
+          example: https://cdn.example.com/products/campera.jpg
+        price:
+          type: number
+          example: 129.99
+        quantity:
+          type: integer
+          example: 2
+        subtotal:
+          type: number
+          example: 259.98
+
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 66b8a6e2a2c34b1f8d9e1234
+        user:
+          type: string
+          example: 5f8f8c44b54764421b7156c9
+        products:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/CartItem'
+        total:
+          type: number
+          example: 259.98
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-11-18T18:30:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-11-18T19:00:00Z
+
+    CartsListResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: CARTS READ
+        cart:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cart'
+
+    CartReadResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: CART READ
+        cart:
+          $ref: '#/components/schemas/Cart'
+
+    UserCartResponse:
+      type: object
+      properties:
+        success:
+          type: string
+          example: Carrito encontrado
+        cart:
+          $ref: '#/components/schemas/Cart'

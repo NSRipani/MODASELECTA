@@ -4,25 +4,23 @@ class CartDao{
     // Todos los carritos
     async getAllCart() {
         return await Cart.find()
-            .populate('user')
-            .populate('products.items.prod', 'productId title price photo stock')
-            
+            .populate('products.items.prod')
+            .exec();
     }
 
     // Leer por ID de carrito
     async getCartById(id) {
         return await Cart.findById(id)
-            .populate('user')
-            .populate('products.items.prod', 'productId title price photo stock')
-            
+            .populate('products.items.prod')
+            .exec();
     }
 
     // Leer por ID DE USUARIO
     async getCartByUser(userId) {
         return await Cart.findOne({ user: userId })
+            .populate('products.items.prod')
             .populate('user')
-            .populate('products.items.prod', 'productId, title price photo stock')
-            
+            .exec();
     }
 
     // ACTULIZAR
@@ -32,9 +30,6 @@ class CartDao{
                 data, 
                 { new: true, runValidators: true }
             )
-            .populate('user')
-            .populate('products.items.prod', 'productId title price photo stock')
-            
     }
     // Eliminar carrito
     async delete(id) {

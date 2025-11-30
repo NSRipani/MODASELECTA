@@ -42,6 +42,7 @@ export const OrderProvider = (props) => {
             const res = await axios.get(`${rute}/${ordersID}`, { withCredentials: true })
             console.log(res.data)
             const iDOrder = res.data.order
+            console.log('ID ORDER: ', iDOrder)
             setOrders(iDOrder ? [iDOrder] : [])
 
             setOrdersID(res.data.order.filter(order => order.cart.user === idUser) )

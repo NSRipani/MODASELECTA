@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useUserContext } from "../../../context/userContext.jsx";
 import { useOrderContext } from "../../../context/orderContext.jsx";
 import useCloseSession from "../../../hook/messageCloseSession.jsx";
-import { errorMessag, success } from "../../message/message.jsx";
+import { errorMessag, success, info } from "../../message/message.jsx";
 import "./profile.css";
+import { useEffect } from "react";
 
 const UserProfile = () => {
-  const { payload, resetPassword , updateUser  } = useUserContext();
-  const { orders, getOrdersId, ordersID } = useOrderContext();
+  
+  const { payload, resetPassword , updateUserProfile  } = useUserContext();
+  const { orders, getOrders, getOrdersId, ordersID } = useOrderContext();
 
   const [ view, setView ] = useState("main");
   const [ profileData, setProfileData ] = useState(payload);
@@ -15,19 +17,20 @@ const UserProfile = () => {
   // Estados específicos para cambiar contraseña
   const [ password, setCurrentPassword ] = useState("");
   const [ newPassword, setNewPassword ] = useState("");
-  const [ confirmPassword, setConfirmPassword ] = useState("");
-
-  console.log('ORDENES EN PROFILE: ', orders)
-  console.log('ORDENES USUARIO EN PROFILE: ', ordersID)
+  // const [ confirmPassword, setConfirmPassword ] = useState("");
   
   // Estados para editar perfil
   const [formData, setFormData] = useState({
     first_name: payload?.first_name || "",
     last_name: payload?.last_name || "",
     email: payload?.email || "",
-    password: payload?.password || "",
     age: payload?.age || ""
   });
+
+  useEffect(() => {
+    getOrders();
+    setFormData(payload);
+  }, []);
 
   const confirmLogout = useCloseSession();
 
@@ -37,13 +40,17 @@ const UserProfile = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Guardar cambios en perfil: ARREGLAR LÓGICA
+  // Guardar cambios en perfil - envía solo campos modificados
   const handleSaveProfile = async (e) => {
     e.preventDefault();
 
     try {
+      const id = payload?.id;
+      if (!id) {
+        return errorMessag('Usuario no identificado.');
+      }
 
-      await updateUser( formData );
+      await updateUserProfile(id, formData);
 
       success("¡Perfil actualizado con éxito!");
       setProfileData({ ...profileData, ...formData });
@@ -78,6 +85,7 @@ const UserProfile = () => {
   // Pedidos
   const handleViewOrders = async () => {
     try {
+      // await getOrders(ordersID);
       await getOrdersId(ordersID);
       setView("orders");
     } catch {
@@ -112,23 +120,23 @@ const UserProfile = () => {
               <h2>Detalles del Perfil</h2>
               <div className="name">
                 <p id='n' ><strong>Nombre:</strong></p> 
-                <p id='nom'>{payload.first_name} {payload.last_name}</p>
+                <p id='nom'>{payload?.first_name} {payload?.last_name}</p>
               </div>
               <div className="email">
                 <p id='n'><strong>Email:</strong></p> 
-                <p id='nom'>{payload.email}</p>
+                <p id='nom'>{payload?.email}</p>
               </div>
               <div className="age">
                 <p id='n'><strong>Edad:</strong></p> 
-                <p id='nom'>{payload.age} Años</p>
+                <p id='nom'>{payload?.age} Años</p>
               </div>
               <div className="rol">
                 <p id='n'><strong>Rol:</strong></p> 
-                <p id='nom'>{payload.role}</p>
+                <p id='nom'>{payload?.role}</p>
               </div>
               <div className="idCart">
                 <p id='n'><strong>ID Carrito:</strong></p> 
-                <p id='nom'>{payload.cart}</p>
+                <p id='nom'>{payload?.cart}</p>
               </div>
             </div>
           )}
@@ -140,20 +148,20 @@ const UserProfile = () => {
                 <button className="modal-close" onClick={() => setView("profile")}>✕</button>
                 <h2>Editar Perfil</h2>
                 <form onSubmit={handleSaveProfile}>
-                  <label>Nombre: (*)</label>
-                  <input type="text" name="first_name" value={formData.first_name.trim()} onChange={handleInputChange} />
+                  <label htmlFor="first_name">Nombre</label>
+                  <input id="first_name" type="text" name="first_name" value={formData.first_name} onChange={handleInputChange} />
 
-                  <label>Apellido: (*)</label>
-                  <input type="text" name="last_name" value={formData.last_name.trim()} onChange={handleInputChange} />
+                  <label htmlFor="last_name">Apellido</label>
+                  <input id="last_name" type="text" name="last_name" value={formData.last_name} onChange={handleInputChange} />
 
-                  <label>Email: (*)</label>
-                  <input type="email" name="email" placeholder="ejemplo@gmail.com" value={formData.email.trim()} onChange={handleInputChange} />
+                  <label htmlFor="email">Email</label>
+                  <input id="email" type="email" name="email" placeholder="ejemplo@gmail.com" value={formData.email} onChange={handleInputChange} />
 
-                  <label>Edad: (*)</label>
-                  <input type="number" name="age" value={formData.age} onChange={handleInputChange} />
+                  <label htmlFor="age">Edad</label>
+                  <input id="age" type="number" name="age" value={formData.age || ""} onChange={handleInputChange} />
                   
                   <div className='change-password'>
-                    <p>(*) Datos obligatorios </p>
+                    {/* <p>(*) Datos obligatorios </p> */}
                     <a href="#" onClick={(e) => { e.preventDefault(); setView("password"); }}
                     >Cambiar contraseña </a>
                   </div>

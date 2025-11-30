@@ -15,7 +15,12 @@ class PasswordResetService {
         const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutos
 
         await passwordResetRepository.createResetRecord(user.id, code, expiresAt);
-        // await sendRecoveryEmail(email, code);
+        try {
+            await sendRecoveryEmail(email, code);
+        } catch (err) {
+            // No detener el flujo si falla el envío de email; registrar y continuar
+            logger.error('No se pudo enviar el email de recuperación: ' + err.message);
+        }
 
         return { code, user };
     }

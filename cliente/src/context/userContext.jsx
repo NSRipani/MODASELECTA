@@ -4,6 +4,7 @@ import { botonNO, botonSI, estilo, fondo } from '../components/message/style/sty
 import { errorMessag, info, success } from './../components/message/message.jsx';
 import { toast } from 'sonner';
 import axios from 'axios';
+import { set } from 'mongoose';
 
 const UserContext = createContext();
 
@@ -132,20 +133,23 @@ export const UserContextProvider = (props) => {
             errorMessag('Error al actualizar el usuario.')
         }
     }
+
+    // editar perfil
     const updateUserProfile = async (id, data) => {
         try {
-            const response = await axios.patch(`${rute}/${id}/`, data,{ withCredentials: true })
+            const response = await axios.patch(`${rute}/${id}/edit-profile`, data,{ withCredentials: true })
             if (response.status === 200) {
                 setListUser((prevList) => 
                     prevList.map((u) => (u.id === id ? response.data.user : u)) // Actualiza el usuario en la lista
                 );
             }
-            console.log('Usuario', response.data.user.id);
+            console.log('Usuario', response.data);
         } catch (error) {
             console.error('Error al actualizar el usuario:', error);
             errorMessag('Error al actualizar el usuario.')
         }
     }
+
 
     const deleteUser = async (id) => {
         const eliminarUsuario = async (id) => {

@@ -24,6 +24,7 @@ const Carrito = () => {
         if (isLoggedIn && item > 0) { 
             setIsOpen(true);
         } else if (isLoggedIn || item === 0){ 
+            setIsOpen(true);
             info('El carrito está vacío')
         } else {
             info('Dede iniciar sesion para ver los productos')

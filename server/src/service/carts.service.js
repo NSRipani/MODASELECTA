@@ -55,14 +55,17 @@ class CartService {
             const cart = await cartRepository.getCartById(id);
             if (!cart) throw new Error('Carrito no encontrado');
             console.log('ID PRODUCTO:', productId)
+
             const product = await productService.readProductId(productId);
             console.log('PRODUCTO A AGREGAR:', product)
+            
             if (!product) throw new Error('Producto no encontrado');
 
             if (product.stock === 0) throw new Error('Producto sin stock disponible');
 
-            const itemIndex = cart.products.items.findIndex(i => i.prod?.id.toString() === productId);
-
+            const itemIndex = cart.products.items.findIndex((i) => i.prod.id.toString() === productId);
+            console.log('PRODUCTO itemIndex:', itemIndex)
+            
             if (itemIndex > -1) {
                 cart.products.items[itemIndex].quantity += quantity;
             } else {
@@ -75,8 +78,7 @@ class CartService {
             
             // Actualizar subtotales y total
             cart.products.items.forEach(item => {
-                item.subtotal = product.price * item.quantity;
-                // item.subtotal = item.prod.price * item.quantity;
+                item.subtotal = item.prod.price * item.quantity;
             });
 
             cart.total = cart.products.items.reduce((sum, item) => sum + item.subtotal, 0);

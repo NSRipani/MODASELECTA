@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 export const success = (message) => {
     toast.success(message,{
-        position: "top-right",
+        position: "top-center",
         duration: 1500,
         style: {
             backgroundColor: '#2c3e50',
@@ -18,7 +18,7 @@ export const success = (message) => {
 }
 export const successRegistro = (message) => {
     toast.success(message, {
-        position: "top-right",
+        position: "top-center",
         duration: 1500,
         style: {
             backgroundColor: '#2c3e50',
@@ -33,7 +33,7 @@ export const successRegistro = (message) => {
 }
 export const errorRegistro = (message) => {
     toast.error(message, {
-        position: "top-right",
+        position: "top-center",
         duration: 1500,
         style: {
             backgroundColor: '#f8d7da', 
@@ -48,7 +48,7 @@ export const errorRegistro = (message) => {
 }
 export const contacto = (message) => {
     toast.success(message , {
-        position: "top-right",
+        position: "top-center",
         duration: 1500,
         style: {
             backgroundColor: '#2c3e50',
@@ -65,7 +65,7 @@ export const contacto = (message) => {
 
 export const errorMessag = (message) => {
     toast.error(message, {
-        position: "top-right",
+        position: "top-center",
         duration: 1500,
         style: {
             backgroundColor: '#f8d7da', 
@@ -80,7 +80,7 @@ export const errorMessag = (message) => {
 
 export const info = (message) => {
     toast.info(message, {
-        position: "top-right",
+        position: "top-center",
         duration: 1500,
         style: {
             backgroundColor: '#1a1a1a',
