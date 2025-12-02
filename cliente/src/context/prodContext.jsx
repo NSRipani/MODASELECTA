@@ -92,6 +92,7 @@ export const ProdProvider = (props) => {
         }
     };
 
+    // no utilizado
     const updateProductStock = async (id, nuevoStock) => {
         try {
             const response = await axios.patch(`${rute}/${id}/stock`,

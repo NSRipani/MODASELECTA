@@ -23,7 +23,7 @@ class ProductController {
             const { id } = req.params
             const response = await productService.readProductId(id);
             if (response) {
-                logger.info(`Product with ID ${id} retrieved successfully`);
+                logger.info(`Product with ID ${response.id} retrieved successfully`);
                 return res.status(200).json({ message: "PRODUCT READ", response });
             }
             logger.warn(`No product found with ID ${id}`);
