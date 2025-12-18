@@ -9,23 +9,26 @@ import { OrderProvider } from './context/orderContext.jsx'
 import { ProdProvider } from './context/prodContext.jsx'
 import { ContactProvider } from './context/contactContext.jsx'
 import { SubscriptionProvider } from './context/subscripContext.jsx'
+import { AuthContextProvider } from './context/authContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserContextProvider>
-        <CarroProvider>
-          <OrderProvider>
-            <ProdProvider>
-              <ContactProvider>
-                <SubscriptionProvider>
-                  <App />
-                </SubscriptionProvider>
-              </ContactProvider>
-            </ProdProvider>
-          </OrderProvider>
-        </CarroProvider>
-      </UserContextProvider>
+      <AuthContextProvider>
+        <UserContextProvider>
+          <CarroProvider>
+            <OrderProvider>
+              <ProdProvider>
+                <ContactProvider>
+                  <SubscriptionProvider>
+                    <App />
+                  </SubscriptionProvider>
+                </ContactProvider>
+              </ProdProvider>
+            </OrderProvider>
+          </CarroProvider>
+        </UserContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
 )
