@@ -3,12 +3,12 @@ import { useEffect, useMemo, useState } from 'react'
 import CartSidebar from './modalCart/cartSidebar.jsx'
 import { useCarroContext } from './../../../context/cartContext.jsx';
 import { info } from '../../message/message.jsx';
-import { useUserContext } from '../../../context/userContext.jsx';
+import { useAuthContext } from '../../../context/authContext.jsx';
 
 const Carrito = () => { 
 
     const { cart, cartUSER,itemsCart, increaseQty, decreaseQty, removeFromCart, isOpen, setIsOpen, idUser } = useCarroContext()
-    const { payload } = useUserContext();
+    const { payload } = useAuthContext();
 
     const isLoggedIn = !!payload; // Si hay payload, usuario logueado
 

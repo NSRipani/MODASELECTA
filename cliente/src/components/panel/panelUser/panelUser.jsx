@@ -1,22 +1,23 @@
 import './panelUser.css'
 import React, { useEffect, useState } from "react"
 import { Toaster } from 'sonner';
-import { useUserContext } from '../../../context/userContext.jsx';
 import useNavigation from '../../../navigatePage/navigatePage.jsx';
 import { RiUserAddLine, RiListView } from "react-icons/ri";
 import { BiHide } from "react-icons/bi";
 import { TbArrowBack } from "react-icons/tb";
 import { MdCleaningServices, MdDeleteForever } from 'react-icons/md';
 import { FaUserEdit } from "react-icons/fa";
+import { useAuthContext } from '../../../context/authContext.jsx';
+import { useUserContextOptimized } from '../../../context/userContextOptimized.jsx';
 
 const PanelUser = () => {
     const [editId, setEditId] = useState(null);
 
-    const { roles, setRoles, email, setEmail, user, setUser,
-        updateUser, allUser, deleteUser, listUser, hideUsers,
+    const { user, setUser, updateUser, allUser, deleteUser, listUser, hideUsers,
         searchEmail, searchRol, resetSearchRole, resetSearchEmail, clean
-    } = useUserContext();
-
+    } = useUserContextOptimized();
+    const { roles, setRoles, email, setEmail } = useAuthContext();
+    
     const { navigateTo } = useNavigation();
 
     const icon = {color: 'white', fontSize: '1.5rem'}

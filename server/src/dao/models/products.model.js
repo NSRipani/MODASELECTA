@@ -53,8 +53,8 @@ const product = new Schema({
     seo: { title: String, description: String, keywords: [String] },
 
     // 👮 Auditoría
-    createdBy: { type: Schema.Types.ObjectId, ref: "User" },
-    updatedBy: { type: Schema.Types.ObjectId, ref: "User" }
+    createdBy: { type: Schema.Types.ObjectId, ref: "users" },
+    updatedBy: { type: Schema.Types.ObjectId, ref: "users" }
 
     }, {
         timestamps: true

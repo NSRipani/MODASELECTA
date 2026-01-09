@@ -3,16 +3,17 @@ import Logo from "../logo/logo.jsx";
 import Logout from "../logout/logout.jsx";
 import Carrito from '../img-carrito/carroImagen.jsx';
 import { Toaster } from 'sonner';
-import React, { useState } from 'react';
-import { useUserContext } from '../../../context/userContext.jsx';
+import React, { useState, useEffect } from 'react';
 import useCloseSession from '../../../hook/messageCloseSession.jsx';
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useAuthContext } from '../../../context/authContext.jsx';
 
 const BarraNav = () => {
     const [showAdminMenu, setShowAdminMenu] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
 
-    const { payload } = useUserContext();
+    const { payload } = useAuthContext();
     const confirmLogout = useCloseSession();
 
     const isAdmin = payload?.role === 'admin';
@@ -27,7 +28,7 @@ const BarraNav = () => {
     };
 
     return (
-        <header className="hd-conteiner">
+        <header className={`hd-conteiner ${isHidden ? 'hidden' : ''}`}>
             <div>
                 <Logo />
             </div>

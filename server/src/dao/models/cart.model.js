@@ -7,12 +7,12 @@ const cartSchema = new Schema({
         items: [
             { 
                 prod: { type: Types.ObjectId, ref: "products", required: true, index: true },
-                quantity: { type: Number, default: 1},
-                subtotal: { type: Number, require: true }
+                quantity: { type: Number, default: 1, min: 1},
+                subtotal: { type: Number, required: true }
             }
         ]
     },
-    total: { type: Number, require: true, default: 0 }
+    total: { type: Number, required: true, default: 0 }
 }, {
     timestamps: true 
 });

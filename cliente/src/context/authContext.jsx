@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { errorMessag, info, success } from '../components/message/message.jsx';
-import { toast } from 'sonner';
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -76,7 +75,8 @@ export const AuthContextProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            jwt, setJwt, role, setRole, payload, setPayload, login, setLogin, handleSubmit, logout, id
+            jwt, setJwt, role, setRole, payload, setPayload, login,
+            setLogin, handleSubmit, logout, id
         }}>
             {children}
         </AuthContext.Provider>

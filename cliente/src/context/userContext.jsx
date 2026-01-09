@@ -4,7 +4,6 @@ import { botonNO, botonSI, estilo, fondo } from '../components/message/style/sty
 import { errorMessag, info, success } from './../components/message/message.jsx';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { set } from 'mongoose';
 
 const UserContext = createContext();
 
@@ -48,10 +47,10 @@ export const UserContextProvider = (props) => {
                     console.log('usuario: ', usuario)
                     if (usuario?.role === 'admin') {
                         navigate('/admin');
-                        success(`¡${usuario.first_name}, Has iniciado sesión exitosamente!`);
+                        success(`¡ ${usuario.first_name}, Has iniciado sesión exitosamente !`);
                     } else {
                         navigate('/');
-                        success(`¡${usuario.first_name}, Has iniciado sesión exitosamente!`);
+                        success(`¡ ${usuario.first_name}, Has iniciado sesión exitosamente !`);
                     }
                 }
             }

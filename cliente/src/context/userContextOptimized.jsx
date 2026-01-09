@@ -5,11 +5,11 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { useAuthContext } from './authContext.jsx';
 
-const UserContext = createContext();
+const UserContextOptimized = createContext();
 
-export const useUserContext = () => useContext(UserContext);
+export const useUserContextOptimized = () => useContext(UserContextOptimized);
 
-export const UserContextProvider = ({ children }) => {
+export const UserContextOptimizedProvider = ({ children }) => {
     const { payload } = useAuthContext(); // Obtener payload de AuthContext
 
     const [listUser, setListUser] = useState([]);
@@ -117,14 +117,17 @@ export const UserContextProvider = ({ children }) => {
         }
     };
 
-    const resetPassword = async (token, newPassword) => {
+    const resetPassword = async (email, code, newPassword) => {
         try {
-            const response = await axios.post(`${rutePassword}/reset`, { token, newPassword });
-            if (response.status === 200) {
-                success('Contraseña restablecida exitosamente');
+            const res = await axios.post(`${rutePassword}/reset`, { email, code, newPassword });
+            if (res.status === 200) {
+                return res.data;
             }
         } catch (error) {
-            errorMessag('Error al restablecer la contraseña');
+            console.error('Error al restablecer la contraseña:', error);
+            // const msg = error?.response?.data?.message || 'Error al restablecer la contraseña.';
+            // errorMessag(msg);
+            throw error;
         }
     };
 
@@ -140,12 +143,12 @@ export const UserContextProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{
+        <UserContextOptimized.Provider value={{
             listUser, setListUser, user, setUser, email, setEmail, roles, setRoles,
             registerUser, allUser, updateUser, updateUserProfile, deleteUser, hideUsers,
             requestPasswordReset, resetPassword, changePassword
         }}>
             {children}
-        </UserContext.Provider>
+        </UserContextOptimized.Provider>
     );
 };

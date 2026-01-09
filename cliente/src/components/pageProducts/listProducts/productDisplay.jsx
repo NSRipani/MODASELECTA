@@ -1,12 +1,14 @@
 import './productDisplay.css';
 import axios from 'axios';
-import Loaders from '../loaders/loaders.jsx';
 import { useEffect, useState } from 'react';
-import { Toaster } from 'sonner';
+import { Toaster, toast } from 'sonner';
 import { useCarroContext } from '../../../context/cartContext.jsx';
-import {useUserContext} from '../../../context/userContext.jsx';
 import SubHeader from '../category/sub-nav.jsx';
 import { HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
+import { useAuthContext } from '../../../context/authContext.jsx';
+import { errorMessag, success } from '../../message/message.jsx';
+import LoadingSpinner from '../../common/LoadingSpinner.jsx';
 
 const StarRating = ({ rating, onRatingChange }) => {
     const stars = [1, 2, 3, 4, 5]; // Estrellas del 1 al 5
@@ -25,8 +27,7 @@ const StarRating = ({ rating, onRatingChange }) => {
 };
 
 const ProductDisplay = () => {
-    // const { jwt } = useUserContext();
-    const { payload } = useUserContext();
+    const { payload } = useAuthContext();
     const { addToCart } = useCarroContext();
 
     const isLoggedIn = !!payload; // Si hay payload, usuario logueado
@@ -41,6 +42,7 @@ const ProductDisplay = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [rating, setRating] = useState(0);
+    const [favorites, setFavorites] = useState(new Set());
 
     // console.log('filteredProducts: ', filteredProducts)
 
@@ -83,7 +85,27 @@ const ProductDisplay = () => {
     };
 
     const handleAddToCart = (product) => {
+        if (!isLoggedIn) {
+            errorMessag('Debes iniciar sesión para agregar productos al carrito');
+            return;
+        }
         addToCart(product);
+        // success(`${product.title} agregado al carrito`);
+    };
+
+    const toggleFavorite = (productId) => {
+        setFavorites(prev => {
+            const newFavorites = new Set(prev);
+            console.log('Favorites antes:', newFavorites);
+            if (newFavorites.has(productId)) {
+                newFavorites.delete(productId);
+                success('Removido de favoritos');
+            } else {
+                newFavorites.add(productId);
+                success('Agregado a favoritos');
+            }
+            return newFavorites;
+        });
     };
 
     const openModal = (product) => {
@@ -94,107 +116,165 @@ const ProductDisplay = () => {
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedProduct(null);
+        setSelectedSize(null);
+        setRating(0);
+    };
+
+    const handleSizeSelect = (size) => {
+        setSelectedSize(size);
     };
 
     
 
-    if (loading) return <Loaders />;
+    if (loading) return <LoadingSpinner message="Cargando productos..." />;
 
     return (
         <>
-            <SubHeader/>
+            <SubHeader />
             <section className="product-display">
-                <div className='section-prod'> 
-                    <div className="filters-container">
-                        <select name="category" value={filter.category} onChange={handleFilterChange}>
-                            <option value="">📦 Todas las Categorías</option>
-                            <option value="Abrigos">🧥 Abrigos</option>
-                            <option value="Camisas">👔 Camisas</option>
-                            <option value="Pantalones">👖 Pantalones</option>
-                            <option value="shirt">👕 Shirt</option>
-                            <option value="Zapatillas">👟 Zapatillas</option>
-                        </select>
-            
-                        <select name="price" value={filter.price} onChange={handleFilterChange}>
-                            <option value="">💲 Todos los Precios</option>
-                            <option value="0-50">$0 - $50</option>
-                            <option value="50-100">$50 - $100</option>
-                            <option value="100-500">$100 - $500</option>
-                        </select>
-                    </div>
-                    <div className="product-list">  
-                        <div className='grid'>
-                        {filteredProducts.map(product => (  
-                            <div key={product._id} className="product-item">  
-                                <img src={product.photo} alt={product.title} onClick={() => openModal(product)} />
-                                <h2>{product.title}</h2>
-                                {product.stock === 0 ? ( 
-                                    <p className='stock'>Stock: {product.stock} <p className='sin-stock'>SIN STOCK</p></p> 
-                                ) : (
-                                    <p className='stock'>Stock: {product.stock} </p>)
-                                }
-                                <div className='card-actions'>
-                                    <p>Precio: ${product.price.toFixed(2)}</p>
-                                    <button onClick={() => handleAddToCart(product)} disabled={!isLoggedIn} 
-                                    title={isLoggedIn ? '' : 'Debes iniciar sesión para agregar productos'}>Comprar</button>
-                                </div>
-                            </div>)
-                        )}
+                <div className="product-display-container">
+                    <div className="filters-section">
+                        <div className="filters-container">
+                            <div className="filter-group">
+                                <label>Categoría</label>
+                                <select name="category" value={filter.category} onChange={handleFilterChange}>
+                                    <option value="">Todas las Categorías</option>
+                                    <option value="Abrigos">🧥 Abrigos</option>
+                                    <option value="Camisas">👔 Camisas</option>
+                                    <option value="Pantalones">👖 Pantalones</option>
+                                    <option value="shirt">👕 Shirts</option>
+                                    <option value="Zapatillas">👟 Zapatillas</option>
+                                </select>
+                            </div>
+
+                            <div className="filter-group">
+                                <label>Rango de Precio</label>
+                                <select name="price" value={filter.price} onChange={handleFilterChange}>
+                                    <option value="">Todos los Precios</option>
+                                    <option value="0-50">$0 - $50</option>
+                                    <option value="50-100">$50 - $100</option>
+                                    <option value="100-500">$100 - $500</option>
+                                </select>
+                            </div>
                         </div>
-                        {filteredProducts.length > 0 && 
-                        <div className="pagination">
-                            <button className={`size-buttons ${currentPage === 1 ? 'disabled' : ''}`} onClick={() => fetchProducts(currentPage - 1)} disabled={currentPage === 1}><HiOutlineArrowNarrowLeft/> </button>
-                            <span>Página {currentPage} de {totalPages}</span>
-                            <button className={`size-buttons ${currentPage === totalPages ? 'disabled' : ''}`} onClick={() => fetchProducts(currentPage + 1)} disabled={currentPage === totalPages}><HiOutlineArrowNarrowRight/> </button>
-                        </div>}
-                    </div> 
+                        <div className="results-count">
+                            {filteredProducts.length} productos encontrados
+                        </div>
+                    </div>
                 </div>
+                <div className="products-section">
+                    <div className="products-grid">
+                        {filteredProducts.map(product => (
+                            <div key={product._id} className="product-card">
+                                <div className="product-image-container">
+                                    <img src={product.photo} alt={product.title} onClick={() => openModal(product)} className="image-product" />
+                                    <div className="product-overlay">
+                                        <button className="quick-view-btn" onClick={() => openModal(product)}>Vista Rápida</button>
+                                    </div>
+                                    <button className={`favorite-btn ${favorites.has(product._id) ? 'active' : ''}`} onClick={() => toggleFavorite(product._id)}><FaHeart /></button>
+                                    {product.stock === 0 && (
+                                        <div className="out-of-stock-badge">SIN STOCK</div>
+                                    )}
+                                </div>
+                                <div className="info-product">
+                                    <h3 className="title-product">{product.title}</h3>
+                                    <div className="product-price">
+                                        <span className="price">${product.price.toFixed(2)}</span>
+                                    </div>
+                                    <div className="product-stock">
+                                        Stock: {product.stock}
+                                    </div>
+                                    <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}
+                                        disabled={!isLoggedIn || product.stock === 0}><FaShoppingCart />
+                                        {product.stock === 0 ? 'Sin Stock' : 'Agregar al Carrito'}
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                {filteredProducts.length > 0 && (
+                    <div className="pagination">
+                        <button
+                            className={`pagination-btn ${currentPage === 1 ? 'disabled' : ''}`}
+                            onClick={() => fetchProducts(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        ><HiOutlineArrowNarrowLeft />Anterior</button>
+                        <div className="pagination-info">Página {currentPage} de {totalPages}</div>
+                        <button
+                            className={`pagination-btn ${currentPage === totalPages ? 'disabled' : ''}`}
+                            onClick={() => fetchProducts(currentPage + 1)}
+                            disabled={currentPage === totalPages}>Siguiente<HiOutlineArrowNarrowRight />
+                        </button>
+                    </div>
+                )}
+
+                {filteredProducts.length === 0 && (
+                    <div className="no-products">
+                        <h3>No se encontraron productos</h3>
+                        <p>Intenta cambiar los filtros</p>
+                    </div>
+                )}
+                </div>
+
             </section>
 
-            {/* Modal para mostrar detalles del producto */}
+            {/* Modal para detalles del producto */}
             {isModalOpen && selectedProduct && (
-                <div className="modal">
-                    <div className="modal-content">
+                <div className="product-modal-overlay" onClick={closeModal}>
+                    <div className="product-modal" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h2>{selectedProduct.title}</h2>
-                            <span className="close" onClick={closeModal}>&times;</span>
+                            <button className="modal-close" onClick={closeModal}>×</button>
                         </div>
-                        <div className='modal-global'>
-                            <div className='modal-body'>
-                                <div className='modal-image'>
-                                    <img src={selectedProduct.photo} alt={selectedProduct.title} />
-                                </div>
-                                <div className='modal-footer'>
-                                    <p><strong>Precio: ${selectedProduct.price}</strong></p>
-                                    {selectedProduct.category === 'Zapatillas' && (
+
+                        <div className="modal-body">
+                            <div className="modal-image-section">
+                                <img src={selectedProduct.photo} alt={selectedProduct.title} />
+                            </div>
+
+                            <div className="modal-info-section">
+                                <div className="product-details">
+                                    <div className="price-section">
+                                        <span className="price">${selectedProduct.price.toFixed(2)}</span>
+                                        <span className="stock">Stock: {selectedProduct.stock}</span>
+                                    </div>
+
+                                    <div className="rating-section">
+                                        <StarRating rating={rating} onRatingChange={handleRatingChange} />
+                                        <span>Tu calificación: {rating} estrellas</span>
+                                    </div>
+
+                                    {(selectedProduct.category === 'Zapatillas' || selectedProduct.category === 'Abrigos') && (
                                         <div className="size-selection">
                                             <h4>Selecciona tu talla:</h4>
-                                            <div className="size-buttons">
-                                                {['36', '37', '38', '39', '40', '41', '42', '43'].map(size => (
-                                                    <button key={size} onClick={() => setSelectedSize(size)} >
-                                                        {size}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )} { selectedProduct.category === 'Abrigos' && (
-                                        <div className="size-selection">
-                                            <h4>Selecciona tu talla:</h4>
-                                            <div className="size-buttons">
-                                                {['S', 'M', 'L', 'XL', 'XXL'].map(size => (
-                                                    <button key={size} onClick={() => handleSizeSelect(size)}>
+                                            <div className="size-options">
+                                                {(selectedProduct.category === 'Zapatillas'
+                                                    ? ['36', '37', '38', '39', '40', '41', '42', '43']
+                                                    : ['S', 'M', 'L', 'XL', 'XXL']
+                                                ).map(size => (
+                                                    <button
+                                                        key={size}
+                                                        className={`size-btn ${selectedSize === size ? 'selected' : ''}`}
+                                                        onClick={() => handleSizeSelect(size)}
+                                                    >
                                                         {size}
                                                     </button>
                                                 ))}
                                             </div>
                                         </div>
                                     )}
-                                    <button onClick={() => handleAddToCart(selectedProduct)}>Añadir al carrito</button>
-                                    <h3>Detalles del Producto</h3>
-                                    <p>{selectedProduct.description}--- Descripcion del producto --- </p>
-                                    <StarRating rating={rating} onRatingChange={handleRatingChange} />
-                                    <div className='rating'>
-                                        <p>Tu calificación: {rating} estrellas</p>
+
+                                    <button className="add-to-cart-modal-btn" onClick={() => handleAddToCart(selectedProduct)}
+                                        disabled={!isLoggedIn || selectedProduct.stock === 0}
+                                    >
+                                        <FaShoppingCart />
+                                        {selectedProduct.stock === 0 ? 'Sin Stock' : 'Añadir al Carrito'}
+                                    </button>
+
+                                    <div className="product-description">
+                                        <h4>Descripción</h4>
+                                        <p>{selectedProduct.description || 'Descripción del producto no disponible.'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +282,8 @@ const ProductDisplay = () => {
                     </div>
                 </div>
             )}
-            <Toaster />
+
+            <Toaster position="top-right" />
         </>
     );
 };

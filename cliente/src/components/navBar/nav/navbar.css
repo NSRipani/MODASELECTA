@@ -36,15 +36,16 @@
         top: 0;
         right: -100%;
         height: 100vh;
-        width: 120px;
-        background: #f9f6e8;
+        width: 140px;
+        background: rgba(255, 255, 255, 0.95);
         flex-direction: column;
         align-items: flex-start;
         padding: 2rem 1rem;
         gap: 1.5rem;
-        box-shadow: -2px 0 8px rgba(0,0,0,0.08);
+        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
         transition: right 0.3s ease-in-out;
         z-index: 1000;
+        backdrop-filter: blur(20px);
     }
 
     .icons-group.show {
@@ -147,10 +148,17 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #F3F4F6;
-    padding: .2rem 5rem;
-    color: rgb(0, 0, 0);
-    transition: top 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem 5rem;
+    color: #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.hd-conteiner.hidden {
+    transform: translateY(-100%);
 }
 .hd-conteiner #logo {
     text-align: center;
@@ -159,17 +167,21 @@
 }
 .as a{
     cursor: pointer;
-    padding: 0 1rem;
-    color: rgb(0, 0, 0);
+    padding: 0.5rem 1rem;
+    color: #333;
     text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
-    transition: color 0.3s;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
     list-style: none;
+    border-radius: 8px;
+    position: relative;
 }
 
 .as a:hover {
-    color: #18bc9c; 
+    color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
+    transform: translateY(-2px);
 }
 .admin-dropdown {
     position: relative;
@@ -180,22 +192,22 @@
     display: flex;
     padding: 0.5rem 1.45rem;
     gap: 10px;
-    color: rgb(0, 0, 0);
+    color: #333;
     text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
-    transition: color 0.3s;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
     list-style: none;
-    background-color: transparent;
+    background: rgba(0, 0, 0, 0.05);
     border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 .admin-btn:hover{
-    background-color: #444;
-    cursor: pointer;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    color: #18bc9c;
+    background: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+    transform: translateY(-2px);
 }
 .rotate {
     transform: rotate(180deg);
@@ -207,66 +219,62 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: #999;
-    border: 1px solid #222;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    width: 120px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-.admin-menu:hover{
-    border: 1px solid #18bc9c;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    width: 140px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .admin-menu a {
-    color: white;
-    padding: 8px 12px;
+    color: #333;
+    padding: 10px 15px;
     text-decoration: none;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
     width: auto;
 }
 
 .admin-menu a:hover {
-    background-color: #444;
-}
-.admin-menu a#order:hover {
-    background-color: #444;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    background: rgba(0, 123, 255, 0.1);
+    color: #007bff;
 }
 .icons-group{
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 }
 .icons{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 30px;
+    gap: 20px;
 }
 
-.icons a{
-    cursor: pointer;
-}
 .profile{
-    gap: 5px;
+    gap: 8px;
     display: flex;
     align-items: center;
     text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.profile:hover {
+    background: rgba(0, 123, 255, 0.1);
 }
 .profile p{
     margin: 0;
-    color: black;
-    font-weight: bold;
+    color: #333;
+    font-weight: 600;
 }
 .fa-solid{
-    font-size: x-large;
-    opacity: 4;
+    font-size: 1.5rem;
+    color: #007bff;
 }
 .fa-address-card{
     display: flex;
@@ -282,17 +290,19 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: rgb(0, 0, 0);
+    color: #333;
     text-decoration: none;
     font-size: 18px;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
     list-style: none;
+    padding: 0.5rem;
+    border-radius: 8px;
 }
 
 .fa-sign-in-alt:hover, .fa-user-plus:hover { 
-    color: #768884;
-    transition: color 0.3s; 
-    cursor: pointer;
+    color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
+    transform: scale(1.1);
 }
 .sec-icons{
     display: flex;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './changePassword.css';
 import { Toaster, toast } from 'sonner';
 import { success, errorMessag } from '../message/message.jsx';
-import { useUserContext } from '../../context/userContext.jsx';
+import { useUserContextOptimized } from '../../context/userContextOptimized.jsx';
 
 const ChangePassword = () => {
     const [step, setStep] = useState(1); 
@@ -18,7 +18,7 @@ const ChangePassword = () => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
-    const { requestPasswordReset, resetPassword } = useUserContext();
+    const { requestPasswordReset, resetPassword } = useUserContextOptimized();
 
     const sendCode = async (e) => {
         e.preventDefault();

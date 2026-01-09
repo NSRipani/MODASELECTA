@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState} from 'react'
 import axios from 'axios';
 import { errorMessag, info, success } from '../components/message/message.jsx';
-import { useUserContext } from './userContext.jsx';
+import { useAuthContext } from './authContext.jsx';
 
 const CarroContext = createContext();
 export const useCarroContext = () => useContext(CarroContext);
@@ -13,7 +13,7 @@ export const CarroProvider = (props) => {
     const [ cart, setCart ] = useState([]); // Estado para el carrito
     const [ isOpen, setIsOpen ] = useState(false)
     
-    const { payload } = useUserContext()
+    const { payload } = useAuthContext()
 
     useEffect(() => {
         readAllCarts()

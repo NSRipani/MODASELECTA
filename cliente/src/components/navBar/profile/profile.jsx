@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useUserContext } from "../../../context/userContext.jsx";
+import { useAuthContext } from '../../../context/authContext.jsx';
+import { useUserContextOptimized } from "../../../context/userContextOptimized.jsx";
 import { useOrderContext } from "../../../context/orderContext.jsx";
 import useCloseSession from "../../../hook/messageCloseSession.jsx";
 import { errorMessag, success, info } from "../../message/message.jsx";
@@ -8,16 +9,16 @@ import { useEffect } from "react";
 
 const UserProfile = () => {
   
-  const { payload, resetPassword , updateUserProfile  } = useUserContext();
+  const { payload } = useAuthContext();
+  const { resetPassword , updateUserProfile  } = useUserContextOptimized();
   const { orders, getOrders, getOrdersId, ordersID } = useOrderContext();
 
-  const [ view, setView ] = useState("main");
+  const [ view, setView ] = useState("profile");
   const [ profileData, setProfileData ] = useState(payload);
 
   // Estados específicos para cambiar contraseña
   const [ password, setCurrentPassword ] = useState("");
   const [ newPassword, setNewPassword ] = useState("");
-  // const [ confirmPassword, setConfirmPassword ] = useState("");
   
   // Estados para editar perfil
   const [formData, setFormData] = useState({
@@ -69,12 +70,9 @@ const UserProfile = () => {
     }
   };
 
-  // Cambiar contraseña: ARREGLAR LÓGICA
+  // Cambiar contraseña
   const handlePassword = async (e) => {
     e.preventDefault();
-    // if (newPassword !== confirmPassword) {
-    //   return errorMessag("Las contraseñas no coinciden");
-    // }
     try{
       await resetPassword( password, newPassword);
       success("¡Contraseña actualizada con éxito!");
@@ -82,7 +80,6 @@ const UserProfile = () => {
       // limpiar inputs
       setCurrentPassword("");
       setNewPassword("");
-      // setConfirmPassword("");
 
       setView("profile");
     } catch (error){
@@ -90,10 +87,10 @@ const UserProfile = () => {
       errorMessag("Error al cambiar la contraseña.");
     }
   }
+
   // Pedidos
   const handleViewOrders = async () => {
     try {
-      // await getOrders(ordersID);
       await getOrdersId(ordersID);
       setView("orders");
     } catch {
@@ -102,138 +99,130 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="contenedor-principal">
-      {/* HEADER */}
-      <div className="titl-Perfil">
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Perfil"/>
-        <h1> Bienvenido, {payload?.first_name} {payload?.last_name} </h1>
+    <div className="profile-container">
+      {/* Sidebar de navegación */}
+      <div className="profile-sidebar">
+        <div className="profile-avatar">
+          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Perfil" />
+          <h3>{payload?.first_name} {payload?.last_name}</h3>
+          <p>{payload?.email}</p>
+        </div>
+        <nav className="profile-nav">
+          <button className={view === "profile" ? "active" : ""} onClick={() => setView("profile")}>Perfil</button>
+          <button className={view === "edit" ? "active" : ""} onClick={() => setView("edit")}>Editar Perfil</button>
+          <button className={view === "password" ? "active" : ""} onClick={() => setView("password")}>Cambiar Contraseña</button>
+          <button className={view === "orders" ? "active" : ""} onClick={handleViewOrders}>Mis Pedidos</button>
+          <button onClick={confirmLogout}>Cerrar Sesión</button>
+        </nav>
       </div>
 
-      {/* BOTONES */}
-      <div className="contenedor-second">
-        <div className="funciones">
-          <button onClick={() => setView("profile")}>Ver Perfil</button>
-          <button onClick={() => setView("edit")}>Editar Perfil</button>
-          <button onClick={handleViewOrders}>Mis Pedidos</button>
-          <button onClick={confirmLogout}>Cerrar Sesión</button>
-        </div>
-
-        {/* CONTENIDO */}
-        <div className="datos">
-          {view === "main" && <p style={{fontSize: '3rem'}}>Estas en tu perfil</p>}
-
-          {/* PERFIL */}
-          {view === "profile" && payload && (
-            <div className="profile-details">
-              <h2>Detalles del Perfil</h2>
-              <div className="name">
-                <p id='n' ><strong>Nombre:</strong></p> 
-                <p id='nom'>{payload?.first_name} {payload?.last_name}</p>
+      {/* Contenido principal */}
+      <div className="profile-content">
+        {/* Vista de Perfil */}
+        {view === "profile" && payload && (
+          <div className="profile-section">
+            <h2>Información del Perfil</h2>
+            <div className="profile-info">
+              <div className="info-item">
+                <label>Nombre Completo:</label>
+                <span>{payload?.first_name} {payload?.last_name}</span>
               </div>
-              <div className="email">
-                <p id='n'><strong>Email:</strong></p> 
-                <p id='nom'>{payload?.email}</p>
+              <div className="info-item">
+                <label>Correo Electrónico:</label>
+                <span>{payload?.email}</span>
               </div>
-              <div className="age">
-                <p id='n'><strong>Edad:</strong></p> 
-                <p id='nom'>{payload?.age} Años</p>
+              <div className="info-item">
+                <label>Edad:</label>
+                <span>{payload?.age} años</span>
               </div>
-              <div className="rol">
-                <p id='n'><strong>Rol:</strong></p> 
-                <p id='nom'>{payload?.role}</p>
+              <div className="info-item">
+                <label>Rol:</label>
+                <span>{payload?.role}</span>
               </div>
-              <div className="idCart">
-                <p id='n'><strong>ID Carrito:</strong></p> 
-                <p id='nom'>{payload?.cart}</p>
+              <div className="info-item">
+                <label>ID de Carrito:</label>
+                <span>{payload?.cart}</span>
               </div>
-            </div>
-          )}
-
-          {/* EDITAR PERFIL */}
-          {view === "edit" && (
-            <div className="modal-overlay">
-              <div className="edit-profile">
-                <button className="modal-close" onClick={() => setView("profile")}>✕</button>
-                <h2>Editar Perfil</h2>
-                <form onSubmit={handleSaveProfile}>
-                  <label htmlFor="first_name">Nombre</label>
-                  <input id="first_name" type="text" name="first_name" value={formData?.first_name ?? ""} onChange={handleInputChange} />
-
-                  <label htmlFor="last_name">Apellido</label>
-                  <input id="last_name" type="text" name="last_name" value={formData?.last_name ?? ""} onChange={handleInputChange} />
-
-                  <label htmlFor="email">Email</label>
-                  <input id="email" type="email" name="email" placeholder="ejemplo@gmail.com" value={formData?.email ?? ""} onChange={handleInputChange} />
-
-                  <label htmlFor="age">Edad</label>
-                  <input id="age" type="number" name="age" value={formData?.age ?? ""} onChange={handleInputChange} />
-                  
-                  <div className='change-password'>
-                    {/* <p>(*) Datos obligatorios </p> */}
-                    <a href="#" onClick={(e) => { e.preventDefault(); setView("password"); }}
-                    >Cambiar contraseña </a>
-                  </div>
-                  <button type="submit">Guardar Cambios</button>
-                </form>
-              </div>
-            </div>
-          )}
-          {view === "password" && (
-          <div className="modal-overlay">
-            <div className="edit-profile">
-              <button className="modal-back" onClick={() => setView("edit")}>←</button>
-              <button className="modal-close" onClick={() => setView("profile")}>✕</button>
-              <h2>Cambiar Contraseña</h2>
-              <form onSubmit={ handlePassword } >
-                <label>Contraseña actual: (*)</label>
-                <input type="password" name="currentPassword" value={password} onChange={(e) => setCurrentPassword(e.target.value)} required/>
-
-                <label>Nueva contraseña: (*)</label>
-                <input type="password" name="newPassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-
-                <p>(*) Datos obligatorios</p>
-
-                <button type="submit">Guardar Contraseña</button>
-              </form>
             </div>
           </div>
         )}
 
-          {/* PEDIDOS */}
-          {view === "orders" && (
-            <div className="orders-table">
-              <h2>Mis Pedidos</h2>
-              {ordersID?.length === 0 ? (
-                <p>No tienes órdenes realizadas.</p>
-              ) : (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID del Pedido</th>
-                      <th>ID del Carrito</th>
-                      <th>ID del Usuario</th>
-                      <th>Fecha</th>
-                      <th>Total</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ordersID && ordersID?.map((order) => (
-                      <tr key={order.id}>
-                        <td>{order.id}</td>
-                        <td>{order.cart?._id}</td>
-                        <td>{order.cart?.user}</td>
-                        <td>{new Date(order.cart?.updatedAt).toLocaleDateString('es-AR')}</td>
-                        <td>${order.cart?.total}</td>
-                        <td>{order.status}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
-          )}
-        </div>
+        {/* Vista de Editar Perfil */}
+        {view === "edit" && (
+          <div className="profile-section">
+            <h2>Editar Perfil</h2>
+            <form onSubmit={handleSaveProfile} className="profile-form">
+              <div className="form-group">
+                <label htmlFor="first_name">Nombre</label>
+                <input id="first_name" type="text" name="first_name" value={formData?.first_name ?? ""} onChange={handleInputChange} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="last_name">Apellido</label>
+                <input id="last_name" type="text" name="last_name" value={formData?.last_name ?? ""} onChange={handleInputChange} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Correo Electrónico</label>
+                <input id="email" type="email" name="email" placeholder="ejemplo@gmail.com" value={formData?.email ?? ""} onChange={handleInputChange} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="age">Edad</label>
+                <input id="age" type="number" name="age" value={formData?.age ?? ""} onChange={handleInputChange} />
+              </div>
+              <div className="form-actions">
+                <button type="submit" className="btn-primary">Guardar Cambios</button>
+                <button type="button" className="btn-secondary" onClick={() => setView("profile")}>Cancelar</button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* Vista de Cambiar Contraseña */}
+        {view === "password" && (
+          <div className="profile-section">
+            <h2>Cambiar Contraseña</h2>
+            <form onSubmit={handlePassword} className="profile-form">
+              <div className="form-group">
+                <label htmlFor="currentPassword">Contraseña Actual</label>
+                <input id="currentPassword" type="password" name="currentPassword" value={password} onChange={(e) => setCurrentPassword(e.target.value)} required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="newPassword">Nueva Contraseña</label>
+                <input id="newPassword" type="password" name="newPassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+              </div>
+              <div className="form-actions">
+                <button type="submit" className="btn-primary">Actualizar Contraseña</button>
+                <button type="button" className="btn-secondary" onClick={() => setView("profile")}>Cancelar</button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* Vista de Pedidos */}
+        {view === "orders" && (
+          <div className="profile-section">
+            <h2>Mis Pedidos</h2>
+            {ordersID?.length === 0 ? (
+              <p>No tienes órdenes realizadas.</p>
+            ) : (
+              <div className="orders-list">
+                {ordersID?.map((order) => (
+                  <div key={order.id} className="order-card">
+                    <div className="order-header">
+                      <span className="order-id">Pedido #{order.id}</span>
+                      <span className="order-status">{order.status}</span>
+                    </div>
+                    <div className="order-details">
+                      <p><strong>ID Carrito:</strong> {order.cart?._id}</p>
+                      <p><strong>ID Usuario:</strong> {order.cart?.user}</p>
+                      <p><strong>Fecha:</strong> {new Date(order.cart?.updatedAt).toLocaleDateString('es-AR')}</p>
+                      <p><strong>Total:</strong> ${order.cart?.total}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

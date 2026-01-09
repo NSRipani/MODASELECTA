@@ -1,15 +1,18 @@
 import { Schema, model, Types } from "mongoose";
 
-const colletion = 'contact'
+const colection = 'contact'
 const contactSchema = new Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true },
-    message: { type: String, required: true },
-    date: { type: Date, default: Date.now }
+    email: { 
+        type: String, 
+        required: true,
+        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ 
+    },
+    message: { type: String, required: true }
 }, { 
     versionKey: false, 
     timestamps: true 
 });
 
-const ContactModel = model(colletion, contactSchema);
+const ContactModel = model(colection, contactSchema);
 export default ContactModel

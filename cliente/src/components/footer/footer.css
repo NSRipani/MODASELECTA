@@ -1,110 +1,289 @@
-@media (min-width: 426px) and (max-width: 768px){
-    .fuuter .footer-content{
-        scale: 0.95;
-    }
+/* Estilos generales del footer */
+.footer {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
+  padding: 3rem 0 1rem 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.fuuter {
-    background-color: #f8f9fa;
-    color: #212529;
-    padding: 20px ;
-    font-family: Arial, sans-serif;
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: auto;
+/* Sección de marca */
+/* .footer-brand {
+  grid-column: span 2;
+} */
+
+.brand-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #3498db;
+  margin-bottom: 1rem;
 }
 
+.brand-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: #bdc3c7;
+}
+
+.social-links-footer {
+  display: table-footer-group;
+}
+
+.social-links-footer a {
+  color: #ecf0f1;
+  font-size: 1.5rem;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-links-footer a:hover {
+  color: #3498db;
+  transform: translateY(-2px);
+}
+
+/* Secciones generales */
 .footer-section h4 {
-    margin-bottom: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 2px solid #555;
-    padding-bottom: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ecf0f1;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
-.footer-section p,
-.footer-section ul li {
-    font-size: 14px;
-    margin-bottom: 8px;
+.footer-section h4::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background-color: #3498db;
 }
 
 .footer-section ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
 }
 
 .footer-section ul li a {
-    color: #9c9c9c;
-    text-decoration: none;
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
 }
 
 .footer-section ul li a:hover {
-    color: #000;
+  color: #3498db;
 }
 
-.socials {
-    display: flex;
-    gap: 12px;
+/* Información de contacto */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.socials a {
-    color: #9c9c9c;
-    font-size: 18px;
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.socials a:hover {
-    color: #fff;
+.contact-icon {
+  color: #3498db;
+  font-size: 1.2rem;
+}
+
+.contact-item span {
+  font-size: 0.9rem;
+  color: #bdc3c7;
+}
+
+/* Newsletter 
+.footer-newsletter {
+   grid-column: span 2; 
+}*/
+
+.footer-newsletter p {
+  font-size: 0.9rem;
+  color: #bdc3c7;
+  margin-bottom: 1rem;
+  line-height: 1.5;
 }
 
 .newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  margin-bottom: 2rem;
 }
 
-.newsletter-form input {
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    background-color: #898a8a;
-    color: #000000;
-    border: 2px solid black;
-}
-.newsletter-form input:hover{
-    border: 2px solid black;
-    background-color: #898a8a97;
-}
-.newsletter-form button {
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
+.newsletter-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.newsletter-form button:hover {
-    background-color: #218838;
+.newsletter-input-group input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #7f8c8d;
+  border-radius: 6px;
+  background-color: #34495e;
+  color: #ecf0f1;
+  font-size: 0.9rem;
+  transition: border-color 0.3s;
 }
 
-.payment-icons img {
-    height: 28px;
-    margin-right: 8px;
-    align-items: center;
-    display: flex;
-    gap: 20px;
+.newsletter-input-group input:focus {
+  outline: none;
+  border-color: #3498db;
 }
 
+.newsletter-input-group button {
+  padding: 0.75rem 1.5rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.newsletter-input-group button:hover:not(:disabled) {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+}
+
+.newsletter-input-group button:disabled {
+  background-color: #7f8c8d;
+  cursor: not-allowed;
+}
+
+/* Métodos de pago */
+.payment-methods {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Footer bottom */
 .footer-bottom {
+  border-top: 1px solid #7f8c8d;
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-bottom p {
+  font-size: 0.85rem;
+  color: #bdc3c7;
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #3498db;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .footer-brand {
+    grid-column: span 1;
     text-align: center;
-    margin-top: 20px;
-    font-size: 13px;
-    border-top: 1px solid #444;
-    padding-top: 10px;
-    color: #000;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .footer-newsletter {
+    grid-column: span 1;
+  }
+
+  .newsletter-input-group {
+    flex-direction: column;
+  }
+
+  .newsletter-input-group button {
+    width: 100%;
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2rem 0 1rem 0;
+  }
+
+  .footer-container {
+    padding: 0 0.5rem;
+  }
+
+  .brand-name {
+    font-size: 1.5rem;
+  }
+
+  .social-links {
+    gap: 0.75rem;
+  }
+
+  .social-links a {
+    font-size: 1.3rem;
+  }
+
+  .contact-item {
+    gap: 0.5rem;
+  }
+
+  .payment-methods {
+    justify-content: center;
+  }
 }

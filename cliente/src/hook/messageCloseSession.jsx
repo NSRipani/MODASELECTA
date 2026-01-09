@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { estilo, botonNO, botonSI, fondo } from '../components/message/style/style.jsx';
-import { useUserContext } from '../context/userContext.jsx';
+import { useAuthContext } from '../context/authContext.jsx';
 
 export const useCloseSession = () => {
-    const { handleLogout } = useUserContext();
+    const { logout } = useAuthContext();
     const navigate = useNavigate();
 
     const confirmLogout = () => {

@@ -1,27 +1,29 @@
 /* --- CONTENEDOR PRINCIPAL --- */
 .checkout {
-    max-width: 800px;
-    margin: 3rem auto;
+    max-width: 900px;
+    margin: 2rem auto;
     padding: 2rem;
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     font-family: "Inter", sans-serif;
     animation: fadeIn 0.4s ease-in-out;
+    min-height: 80vh;
 }
 
 .checkout h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
     text-align: center;
-    color: #111827;
+    color: #333;
+    font-weight: bold;
 }
 
 .checkout p {
     text-align: center;
     margin-bottom: 2rem;
-    color: #6b7280;
-    font-size: 1rem;
+    color: #666;
+    font-size: 1.1rem;
 }
 
 /* Animación entrada */
@@ -44,46 +46,50 @@
 }
 
 fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
+    border: 1px solid #e0e0e0;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: #f9fafb;
 }
 
 legend {
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
     color: #1f2937;
+    padding: 0 0.5rem;
 }
 
 /* --- INPUTS --- */
-.checkout-form input{
-    width: 95%;
-    background-color: #abaaaa;
-    padding: 0.9rem 1rem;
-    border-radius: 10px;
-    border: 1px solid #202020;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    transition: all 0.2s ease-in-out;
-}
+.checkout-form input,
 .checkout-form select {
-    width: 95%;
-    color: #374151;
-    background-color: rgb(171, 170, 170);
-    padding: 0.9rem 1rem;
+    width: 100%;
+    padding: 1rem;
     border-radius: 10px;
-    border: 1px solid #202020;
+    border: 2px solid #e0e0e0;
     font-size: 1rem;
-    margin-bottom: 1rem;
-    transition: all 0.2s ease-in-out;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    background: #fff;
 }
 
 .checkout-form input:focus,
 .checkout-form select:focus {
-    border-color: #2563eb;
+    border-color: #18bc9c;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 0 0 3px rgba(24, 188, 156, 0.2);
+}
+
+.checkout-form input.error,
+.checkout-form select.error {
+    border-color: #e74c3c;
+}
+
+.error-text {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: block;
 }
 
 /* --- INPUTS EN LÍNEA --- */
@@ -100,58 +106,78 @@ legend {
 .checkout-summary {
     padding: 1.5rem;
     border-radius: 12px;
-    background: #f9fafb;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     border: 1px solid #e5e7eb;
+    text-align: center;
 }
 
 .checkout-summary h3 {
     margin-top: 0;
     margin-bottom: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #111827;
 }
 
 .checkout-summary p {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #374151;
 }
 
 .checkout-summary strong {
-    font-size: 1.3rem;
-    color: #16a34a; /* verde para destacar el total */
+    font-size: 1.5rem;
+    color: #27ae60;
+    font-weight: bold;
 }
 
 /* --- BOTÓN PRINCIPAL --- */
 .btn {
-    padding: 0.9rem 1.5rem;
-    border-radius: 9999px;
-    font-size: 1rem;
-    font-weight: 500;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.3s ease;
     border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .btn-primary {
-    background: #2563eb;
+    background: linear-gradient(135deg, #18bc9c, #128a6e);
     color: #fff;
-    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+    box-shadow: 0 4px 12px rgba(24, 188, 156, 0.3);
     width: 100%;
 }
 
-.btn-primary:hover {
-    background: #1d4ed8;
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(24, 188, 156, 0.4);
+}
+
+.btn-primary:disabled {
+    background: #bdbdbd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 /* --- RESPONSIVE --- */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .checkout {
         margin: 1rem;
         padding: 1.5rem;
     }
 
+    .checkout h1 {
+        font-size: 2rem;
+    }
+
     .inline-inputs {
         flex-direction: column;
+    }
+
+    fieldset {
+        padding: 1rem;
     }
 }

@@ -29,7 +29,7 @@ class ProductController {
             logger.warn(`No product found with ID ${id}`);
             res.status(404).json({ message: "PRODUCTS NOT FOUND" });
         } catch (error) {
-            logger.error(`Error retrieving product with ID ${id}`);
+            // logger.error(`Error retrieving product with ID ${id}`);
             next(error);
         }
     }

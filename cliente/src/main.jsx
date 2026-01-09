@@ -10,12 +10,14 @@ import { ProdProvider } from './context/prodContext.jsx'
 import { ContactProvider } from './context/contactContext.jsx'
 import { SubscriptionProvider } from './context/subscripContext.jsx'
 import { AuthContextProvider } from './context/authContext.jsx'
+import { UserContextOptimizedProvider } from './context/userContextOptimized.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
-        <UserContextProvider>
+        {/* <UserContextProvider> */}
+        <UserContextOptimizedProvider>
           <CarroProvider>
             <OrderProvider>
               <ProdProvider>
@@ -27,7 +29,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               </ProdProvider>
             </OrderProvider>
           </CarroProvider>
-        </UserContextProvider>
+        </UserContextOptimizedProvider>
+        {/* </UserContextProvider> */}
       </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>,

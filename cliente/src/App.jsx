@@ -21,6 +21,7 @@ import Whatsaap from './components/whatsapp/whatsapp.jsx';
 import OrderPanel from './components/panel/panelOrders/panelOrders.jsx';
 import CartSidebar from './components/navBar/img-carrito/modalCart/cartSidebar.jsx';
 import Checkout from './components/navBar/img-carrito/checkoout/checkoout.jsx';
+// import ErrorBoundary from './components/common/ErrorBoundary.jsx';
 
 
 function App() {
