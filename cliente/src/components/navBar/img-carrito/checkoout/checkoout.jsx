@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useCarroContext } from "../../../../context/cartContext.jsx";
 import { useAuthContext } from "../../../../context/authContext.jsx";
 import { useOrderContext } from "../../../../context/orderContext.jsx";
+import { useNotification } from "../../../../context/notificationContext.jsx";
 import "./checkout.css";
-import { success, errorMessag } from "../../../message/message.jsx";
 import axios from "axios";
 
 const Checkout = () => {
@@ -12,6 +12,7 @@ const Checkout = () => {
     const { cart, clearCart } = useCarroContext();
     const { payload } = useAuthContext();
     const { getOrders } = useOrderContext();
+    const { success, error } = useNotification();
 
     const [shippingData, setShippingData] = useState({
         name: '',
@@ -80,14 +81,14 @@ const Checkout = () => {
 
             const response = await axios.post('http://localhost:8000/api/order', orderData, { withCredentials: true });
             if (response.status === 201) {
-                success("¡Pedido realizado con éxito!");
                 clearCart();
                 getOrders(); // Refrescar órdenes
+                success("¡Pedido realizado con éxito!");
                 navigate("/orders"); // Ir a página de órdenes
             }
         } catch (error) {
             console.error("Error al crear orden:", error);
-            errorMessag("Error al procesar el pedido. Inténtalo de nuevo.");
+            error("Error al procesar el pedido. Inténtalo de nuevo.");
         } finally {
             setLoading(false);
         }

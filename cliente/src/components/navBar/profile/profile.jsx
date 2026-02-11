@@ -3,12 +3,13 @@ import { useAuthContext } from '../../../context/authContext.jsx';
 import { useUserContextOptimized } from "../../../context/userContextOptimized.jsx";
 import { useOrderContext } from "../../../context/orderContext.jsx";
 import useCloseSession from "../../../hook/messageCloseSession.jsx";
-import { errorMessag, success, info } from "../../message/message.jsx";
+// import { errorMessag, success, info } from "../../message/message.jsx";
 import "./profile.css";
 import { useEffect } from "react";
+import { useNotification } from "../../../context/notificationContext.jsx";
 
 const UserProfile = () => {
-  
+  const { success,  error } = useNotification();
   const { payload } = useAuthContext();
   const { resetPassword , updateUserProfile  } = useUserContextOptimized();
   const { orders, getOrders, getOrdersId, ordersID } = useOrderContext();
@@ -56,7 +57,7 @@ const UserProfile = () => {
     try {
       const id = payload?.id;
       if (!id) {
-        return errorMessag('Usuario no identificado.');
+        return error('Usuario no identificado.');
       }
 
       await updateUserProfile(id, formData);
@@ -66,7 +67,7 @@ const UserProfile = () => {
       setView("profile");
     } catch (error) {
       console.error("Error al actualizar perfil:", error);
-      errorMessag("Error al actualizar los datos. Verifica la información.");
+      error("Error al actualizar los datos. Verifica la información.");
     }
   };
 
@@ -84,7 +85,7 @@ const UserProfile = () => {
       setView("profile");
     } catch (error){
       console.error(error);
-      errorMessag("Error al cambiar la contraseña.");
+      error("Error al cambiar la contraseña.");
     }
   }
 

@@ -189,19 +189,20 @@
 }
 
 .admin-btn {
-    display: flex;
-    padding: 0.5rem 1.45rem;
-    gap: 10px;
-    color: #333;
+    list-style: none;
     text-decoration: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.45rem;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    transition: all 0.3s ease;
-    list-style: none;
-    background: rgba(0, 0, 0, 0.05);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .admin-btn:hover{
@@ -209,6 +210,7 @@
     color: #007bff;
     transform: translateY(-2px);
 }
+
 .rotate {
     transform: rotate(180deg);
     transition: transform 0.3s ease;
@@ -289,7 +291,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
     color: #333;
     text-decoration: none;
     font-size: 18px;

@@ -14,7 +14,7 @@ export const useCloseSession = () => {
                 <p>¿Estás seguro de que deseas cerrar sesion?</p>
                 <div style={estilo}>
                     <button style={botonSI} onClick={() => {toast.dismiss(t); 
-                        handleLogout();
+                        logout();
                         navigate('/users/login');}}>Sí</button>
                     <button style={botonNO} onClick={() => toast.dismiss(t)}>No</button>
                 </div>

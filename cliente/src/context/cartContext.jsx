@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState} from 'r
 import axios from 'axios';
 import { errorMessag, info, success } from '../components/message/message.jsx';
 import { useAuthContext } from './authContext.jsx';
+import { useNotification } from './notificationContext.jsx';
 
 const CarroContext = createContext();
 export const useCarroContext = () => useContext(CarroContext);
@@ -14,6 +15,7 @@ export const CarroProvider = (props) => {
     const [ isOpen, setIsOpen ] = useState(false)
     
     const { payload } = useAuthContext()
+    const notify = useNotification();
 
     useEffect(() => {
         readAllCarts()
@@ -75,7 +77,7 @@ export const CarroProvider = (props) => {
                 setQty(res.data.payload.products.items.map(item => ({ ...item.prod, quantity: item.quantity }))); // CANTIDAD DE PRODUCTOS
                 setItemsCart(res.data.payload.products.items); // Actualiza los productos en el carrito
                 setCart(res.data.payload); // Actualiza el estado del carrito
-                success('Producto agregado')
+                notify.success('Producto agregado')
                 
             }
         } catch (err) {

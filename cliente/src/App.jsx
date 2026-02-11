@@ -13,7 +13,7 @@ import PanelUser from './components/panel/panelUser/panelUser.jsx'
 import ProductDisplay from './components/pageProducts/listProducts/productDisplay.jsx'
 import ProductDetail from './components/detalleProducto/productDetail.jsx'
 import RegisterUser from './components/navBar/RegisterUser/RegisterUser.jsx'
-import PanelProduct from './components/panel/panelProduct/panelProduct.jsx'
+// import PanelProduct from './components/panel/panelProduct/panelProduct.jsx'
 import NavAdmin from './components/panel/navbarAdmin/navAdmin.jsx';
 import UserProfile from './components/navBar/profile/profile.jsx';
 import Shop from './components/navBar/img-carrito/shop/shop.jsx';
@@ -47,7 +47,7 @@ function App() {
         {/* Admin */}
         <Route path="/admin" element  ={<NavAdmin />}/>
         <Route path="/admin/users" element={<PanelUser />}/>
-        <Route path="/admin/products" element={<PanelProduct />}/>
+        {/* <Route path="/admin/products" element={<PanelProduct />}/> */}
         <Route path="/admin/orders" element={<OrderPanel />}/>
         
         {/* Usuarios */}

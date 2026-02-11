@@ -54,7 +54,7 @@ const Banner = () => {
                                     <img src={product.photo} alt={product.title} />
                                     <h3>{product.title}</h3>
                                     <p>${product.price}</p>
-                                    <a href={`/products/${product.id}`} className="btn-secondary">Ver Detalles</a>
+                                    <a href={`/products/${product.id}`} className="btn-secondary-detalle">Ver Detalles</a>
                                 </div>
                                 ))}
                             </div>

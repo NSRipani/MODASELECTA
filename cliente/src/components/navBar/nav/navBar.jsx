@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import useCloseSession from '../../../hook/messageCloseSession.jsx';
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuthContext } from '../../../context/authContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const BarraNav = () => {
     const [showAdminMenu, setShowAdminMenu] = useState(false);
@@ -19,10 +20,13 @@ const BarraNav = () => {
     const isAdmin = payload?.role === 'admin';
     const isUser = payload?.role === 'user';
 
-    const toggleAdminMenu = () => {
-        setShowAdminMenu(!showAdminMenu);
-    };
-
+    // const toggleAdminMenu = () => {
+    //     setShowAdminMenu(!showAdminMenu);
+    // };
+    const navigat = useNavigate();
+    const adminMenu = () => {
+        navigat('/admin');
+    }
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
@@ -37,8 +41,21 @@ const BarraNav = () => {
                 <a href="/">HOME</a>
                 <a href="/products">PRODUCTOS</a>
                 <a href="/contact">CONTACTO</a>
-
                 { isAdmin && (
+                    <div className="admin-dropdown" >
+                        <button className="admin-btn" onClick={adminMenu}> ADMIN </button>
+                        {/* <i className={`fas fa-chevron-down ${showAdminMenu ? 'rotate' : ''}`}></i> */}
+                        {/* {showAdminMenu && (
+                            <div className="admin-menu">
+                                <a href="/admin" onClick={toggleAdminMenu}>HOME</a>
+                                <a href="/admin/users" onClick={toggleAdminMenu}>USUARIOS</a>
+                                <a href="/admin/products" onClick={toggleAdminMenu}>PRODUCTOS</a>
+                                <a href="/admin/orders" id='order' onClick={toggleAdminMenu}>ORDENES</a>
+                            </div>
+                        )} */}
+                    </div>
+                )}
+                {/* { isAdmin && (
                     <div className="admin-dropdown" >
                         <button onClick={toggleAdminMenu} className="admin-btn">
                             ADMIN <i className={`fas fa-chevron-down ${showAdminMenu ? 'rotate' : ''}`}></i>
@@ -52,7 +69,7 @@ const BarraNav = () => {
                             </div>
                         )}
                     </div>
-                )}
+                )} */}
             </div>
 
             {/* Botón Burger solo en tablet/móvil */}

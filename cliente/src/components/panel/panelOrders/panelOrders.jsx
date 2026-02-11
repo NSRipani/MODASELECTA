@@ -32,7 +32,7 @@ const OrderPanel = () => {
 
     return (
         <div className="order-container">
-            <h1>Gestión de órdenes</h1>
+            {/* <h1>Gestión de órdenes</h1> */}
             <div className="order-content-tasks">
                 <div className="order-filters">
                     {/* 🔎 Selector de criterio */}
@@ -77,81 +77,83 @@ const OrderPanel = () => {
 
             <div className="order-table">
                 <div className="order-header">
-                    <h3>Lista de Órdenes</h3>
-                </div>
-                <div className="order-body">
-                    <table className="table-orders">
-                        <thead>
-                            <tr>
-                                <th>ID Orden</th>
-                                <th>ID Usuario</th>
-                                <th>Fecha</th>
-                                <th>Productos</th>
-                                <th style={{textAlign:'end'}}>Subtotal</th>
-                                <th style={{textAlign:'end'}}>Total</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        { (!orders || orders?.length === 0) && 
-                            <tr>
-                                <td className='sin-ordenes' colSpan="9">No hay órdenes para mostrar</td>
-                            </tr>}
-                        {(orders || orders?.length === 0) ? (
-                            orders.map((order) => (
-                                <tr key={order?.id}>
-                                    <td>
-                                        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-                                            <span>{order?.id}</span>
-                                            <button type="button" className="btn-small" onClick={() => setOrdersID(order.id)}>Usar ID</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-                                            <span>{order.cart?.user || "Usuario no encontrado"}</span>
-                                            {/*  */}
-                                            <button type="button" className="btn-small" onClick={() => setOrdersUserID(order.cart?.user)}>Usar ID</button>
-                                        </div>
-                                    </td>
-                                    <td>{new Date(order.createdAt).toLocaleString('es-AR')}</td>
-                                    <td>
-                                        <ul className="prod-list">
-                                            {order.cart?.products?.items?.length > 0 ? (
-                                                order.cart?.products?.items?.map((item) => (
-                                                    <li key={item._id}>
-                                                        <p id='tit'>{item?.name}</p>
-                                                        <p>x{item.quantity}</p>
-                                                        <p>${item?.price}</p>
-                                                    </li>
-                                                )
-                                            )): (
-                                                <li>Sin productos</li>
-                                            )}
-                                        </ul>
-                                    </td>
-                                    <td style={{textAlign:'end'}}>$ {order.cart?.products?.items?.reduce((acc, item) => acc + item.subtotal, 0)}</td>
-                                    <td style={{textAlign:'end'}}>$ {order.cart?.total}</td>
-                                    <td>
-                                        <select className='selector' value={order.status} onChange={(e) => updateOrderStatus(order.id, e.target.value)}>
-                                            {orderStatus.map((status) => (
-                                                <option key={status} value={status}>
-                                                    {status}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <button className="btn-delete" onClick={() => deleteOrder(order.id)}>Eliminar</button>
-                                    </td>
-                                </tr>
-                            ))
-                        ):(!orders || orders?.length === 0) && 
-                            <tr>
-                                <td className='sin-ordenes' colSpan="9">No hay órdenes para mostrar</td>
-                            </tr>}
-                        </tbody>
-                    </table>
+                    <fieldset>
+                        <legend>Órdenes Encontradas: {orders ? orders.length : 0}</legend>
+                        <div className="order-body">
+                            <table className="table-orders">
+                                <thead>
+                                    <tr>
+                                        <th>ID Orden</th>
+                                        <th>ID Usuario</th>
+                                        <th>Fecha</th>
+                                        <th>Productos</th>
+                                        <th style={{textAlign:'end'}}>Subtotal</th>
+                                        <th style={{textAlign:'end'}}>Total</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                { (!orders || orders?.length === 0) && 
+                                    <tr>
+                                        <td className='sin-ordenes' colSpan="9">No hay órdenes para mostrar</td>
+                                    </tr>}
+                                {(orders || orders?.length === 0) ? (
+                                    orders.map((order) => (
+                                        <tr key={order?.id}>
+                                            <td>
+                                                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                                                    <span>{order?.id}</span>
+                                                    <button type="button" className="btn-small" onClick={() => setOrdersID(order.id)}>Usar ID</button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                                                    <span>{order.cart?.user || "Usuario no encontrado"}</span>
+                                                    {/*  */}
+                                                    <button type="button" className="btn-small" onClick={() => setOrdersUserID(order.cart?.user)}>Usar ID</button>
+                                                </div>
+                                            </td>
+                                            <td>{new Date(order.createdAt).toLocaleString('es-AR')}</td>
+                                            <td>
+                                                <ul className="prod-list">
+                                                    {order.cart?.products?.items?.length > 0 ? (
+                                                        order.cart?.products?.items?.map((item) => (
+                                                            <li key={item._id}>
+                                                                <p id='tit'>{item?.name}</p>
+                                                                <p>x{item.quantity}</p>
+                                                                <p>${item?.price}</p>
+                                                            </li>
+                                                        )
+                                                    )): (
+                                                        <li>Sin productos</li>
+                                                    )}
+                                                </ul>
+                                            </td>
+                                            <td style={{textAlign:'end'}}>$ {order.cart?.products?.items?.reduce((acc, item) => acc + item.subtotal, 0)}</td>
+                                            <td style={{textAlign:'end'}}>$ {order.cart?.total}</td>
+                                            <td>
+                                                <select className='selector' value={order.status} onChange={(e) => updateOrderStatus(order.id, e.target.value)}>
+                                                    {orderStatus.map((status) => (
+                                                        <option key={status} value={status}>
+                                                            {status}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button className="button-delete" onClick={() => deleteOrder(order.id)}>Eliminar</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ):(!orders || orders?.length === 0) && 
+                                    <tr>
+                                        <td className='sin-ordenes' colSpan="9">No hay órdenes para mostrar</td>
+                                    </tr>}
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
             <Toaster />

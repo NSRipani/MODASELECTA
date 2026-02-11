@@ -1,21 +1,27 @@
 import { createContext, useContext, useState } from 'react';
 import { botonNO, botonSI, estilo, fondo } from '../components/message/style/style.jsx';
-import { errorMessag, success } from '../components/message/message.jsx';
+// import { error, notify.success } from '../components/message/message.jsx';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useAuthContext } from './authContext.jsx';
+import { useNotification } from './notificationContext.jsx';
+// import { useNavigate } from 'react-router-dom';
 
 const UserContextOptimized = createContext();
 
 export const useUserContextOptimized = () => useContext(UserContextOptimized);
 
 export const UserContextOptimizedProvider = ({ children }) => {
-    const { payload } = useAuthContext(); // Obtener payload de AuthContext
+    const { payload, role, setRole } = useAuthContext(); // Obtener payload de AuthContext
+
+    const notify = useNotification();
+    
+    // const navigate = useNavigate();
 
     const [listUser, setListUser] = useState([]);
-    const [user, setUser] = useState({ first_name: '', last_name: '', age: 0, email: '', role: '' });
+    const [user, setUser] = useState({ first_name: '', last_name: '', age: 0, email: '', password: '' });
     const [email, setEmail] = useState('');
-    const [roles, setRoles] = useState("role");
+    // const [roles, setRoles] = useState("role");
 
     const rute = 'http://localhost:8000/api/users';
     const rutePassword = 'http://localhost:8000/api/password';
@@ -24,25 +30,15 @@ export const UserContextOptimizedProvider = ({ children }) => {
         try {
             const response = await axios.post(`${rute}/register`, data);
             if (response.status === 201) {
-                success('Usuario registrado exitosamente');
-                setUser({ first_name: '', last_name: '', age: 0, email: '', role: '' });
+                setListUser(response.data)
+                setUser({ first_name: '', last_name: '', age: 0, email: '', password: '' });
+                notify.success('Usuario registrado exitosamente');
+                // navigate('/users/login');
+                // return true;
             }
         } catch (error) {
             console.error('Error al registrar el usuario:', error.response?.data);
-            errorMessag('Error al registrar el usuario. Corrobore los datos');
-        }
-    };
-
-    const allUser = async () => {
-        try {
-            const response = await axios.get(`${rute}`, { withCredentials: true });
-            if (response.status === 200) {
-                success('¡Lista de usuarios!');
-                setListUser(response.data.users);
-            }
-        } catch (error) {
-            console.error('Error al mostrar los usuarios:', error.response?.data);
-            errorMessag('Error al mostrar usuarios.');
+            notify.error('Error al registrar el usuario. Corrobore los datos');
         }
     };
 
@@ -53,12 +49,12 @@ export const UserContextOptimizedProvider = ({ children }) => {
                 setListUser((prevList) =>
                     prevList.map((u) => (u.id === id ? response.data.user : u))
                 );
-                success('Usuario actualizado!');
+                // notify.success('Usuario actualizado!');
                 setUser({ first_name: '', last_name: '', age: 0, email: '', role: '' });
             }
         } catch (error) {
             console.error('Error al actualizar el usuario:', error);
-            errorMessag('Error al actualizar el usuario.');
+            notify.error('Error al actualizar el usuario.');
         }
     };
 
@@ -72,7 +68,7 @@ export const UserContextOptimizedProvider = ({ children }) => {
             }
         } catch (error) {
             console.error('Error al actualizar el usuario:', error);
-            errorMessag('Error al actualizar el usuario.');
+            notify.error('Error al actualizar el usuario.');
         }
     };
 
@@ -81,12 +77,12 @@ export const UserContextOptimizedProvider = ({ children }) => {
             try {
                 const response = await axios.delete(`${rute}/${id}`, { withCredentials: true });
                 if (response.status === 200) {
-                    success('Usuario eliminado!');
+                    notify.success('Usuario eliminado!');
                     setListUser((prevList) => prevList.filter((user) => user.id !== id));
                 }
             } catch (error) {
                 console.error('Error al eliminar el usuario:', error);
-                errorMessag('Error al eliminar el usuario.');
+                notify.error('Error al eliminar el usuario.');
             }
         };
         toast((t) => (
@@ -100,20 +96,76 @@ export const UserContextOptimizedProvider = ({ children }) => {
         ), { duration: Infinity, position: "top-center", style: fondo });
     };
 
+    const allUser = async () => {
+        try {
+            const response = await axios.get(`${rute}`, { withCredentials: true });
+            if (response.status === 200) {
+                // notify.success('¡Lista de usuarios!');
+                setListUser(response.data.users);
+            }
+        } catch (error) {
+            console.error('Error al mostrar los usuarios:', error.response?.data);
+            notify.error('Error al mostrar usuarios.');
+        }
+    };
+
     const hideUsers = async () => {
         setListUser([]);
-        success('Lista de usuarios oculta.');
+        notify.success('Lista de usuarios oculta.');
     };
+
+    const clean = () => {
+        setUser({ first_name: '', last_name: '', age: 0, email: '', role: '' });
+    }
+
+    const searchRol = async () => {
+        try {
+            const res = await axios.get(`${rute}/role`, { params: { role: role }, withCredentials: true });
+            if (res.status === 200) {
+                const users = res.data.users;
+                setListUser(users);
+                // notify.success('Usuarios filtrados por rol');
+                // Reiniciar el select en panelUser (valor por defecto)
+                setRole('');
+            }
+        } catch (error) {
+            console.error(error, 'Por favor, selecciona un criterio de búsqueda válido.');
+            notify.error('Por favor, selecciona un criterio de búsqueda válido.');
+        }
+    }
+    const searchEmail = async () => {
+        try {
+            const res = await axios.get(`${rute}/email`, { params: { email: email }, withCredentials: true })
+            if (res.status === 200) {
+                const user = res.data.email
+                setListUser(user);  //? [user] : []
+                setEmail(user.email)
+                console.log('listafff: ', res.data.email)
+                success('Usuario encontrado')
+            }
+        } catch (error) {
+            console.error(`${error}, Por favor, selecciona un criterio de búsqueda válido.`)
+            notify.error("Por favor, selecciona un criterio de búsqueda válido.");
+        }
+    }
+    const resetSearchRole = () => {
+        setRole('');
+        setListUser([]);
+    };
+    const resetSearchEmail = () => {
+        setEmail('');
+        setListUser([]);
+    }
 
     // Password reset functions
     const requestPasswordReset = async (email) => {
         try {
             const response = await axios.post(`${rutePassword}/request-reset`, { email });
             if (response.status === 200) {
-                success('Código de recuperación enviado al email');
+                notify.success('Código de recuperación enviado al email');
             }
         } catch (error) {
-            errorMessag('Error al enviar el código de recuperación');
+            notify.error('Error al enviar el código de recuperación');
         }
     };
 
@@ -126,7 +178,7 @@ export const UserContextOptimizedProvider = ({ children }) => {
         } catch (error) {
             console.error('Error al restablecer la contraseña:', error);
             // const msg = error?.response?.data?.message || 'Error al restablecer la contraseña.';
-            // errorMessag(msg);
+            // error(msg);
             throw error;
         }
     };
@@ -135,17 +187,18 @@ export const UserContextOptimizedProvider = ({ children }) => {
         try {
             const response = await axios.patch(`${rutePassword}/change`, { currentPassword, newPassword }, { withCredentials: true });
             if (response.status === 200) {
-                success('Contraseña cambiada exitosamente');
+                notify.success('Contraseña cambiada exitosamente');
             }
         } catch (error) {
-            errorMessag('Error al cambiar la contraseña');
+            notify.error('Error al cambiar la contraseña');
         }
     };
 
     return (
         <UserContextOptimized.Provider value={{
-            listUser, setListUser, user, setUser, email, setEmail, roles, setRoles,
-            registerUser, allUser, updateUser, updateUserProfile, deleteUser, hideUsers,
+            listUser, setListUser, user, setUser, 
+            email, setEmail, searchEmail, resetSearchEmail, searchRol, resetSearchRole,
+            registerUser, allUser, updateUser, updateUserProfile, deleteUser, hideUsers, clean,
             requestPasswordReset, resetPassword, changePassword
         }}>
             {children}

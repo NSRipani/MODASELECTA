@@ -3,33 +3,43 @@ import './registerUser.css';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { errorRegistro, successRegistro } from '../../message/message.jsx';
+// import { useNotification } from '../../../context/notificationContext.jsx';
+import { useUserContextOptimized } from '../../../context/userContextOptimized.jsx';
+// import { errorRegistro, successRegistro } from '../../message/message.jsx';
 
 const RegisterUser = () => {
-    const user = { first_name: '', last_name: '', email: '', age: 0, password: '', role: '' }
-
-    const [formData, setFormData] = useState(user);
+    // const user = { first_name: '', last_name: '', email: '', age: 0, password: '', role: '' }
+    // const [user, setFormData] = useState(user);
+    const { user, setUser, registerUser } = useUserContextOptimized();
+    // const { success, error } = useNotification();
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({...formData, [name]: value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8000/api/users/register', formData);
-            if (response.status === 201) {
-                setFormData(user);
-                successRegistro(`¡ ${formData.first_name} tu registro fue exitoso !`);
-                navigate('/users/login')
-            }
-        } catch (error) {
-            console.error('Error al registrar el usuario:', error.response);
-            errorRegistro('Error al registrar el usuario. Corrobore los datos');
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setUser({...user, [name]: value });
+    // };
+    const redict = async () => {
+        if (await registerUser(user)){
+            navigate('/users/login')
         }
     };
+    // if (registerUser) {
+    //     navigate('/users/login')
+    // }
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await axios.post('http://localhost:8000/api/users/register', user);
+    //         if (response.status === 201) {
+    //             setFormData(user);
+    //             success(`¡ ${user.first_name} tu registro fue exitoso !`);
+    //             navigate('/users/login')
+    //         }
+    //     } catch (error) {
+    //         console.error('Error al registrar el usuario:', error.response);
+    //         error('Error al registrar el usuario. Corrobore los datos');
+    //     }
+    // };
 
     return (
         <div className="register-container">
@@ -59,7 +69,7 @@ const RegisterUser = () => {
                         <h2>Crear Cuenta</h2>
                         <p>Completa tus datos para comenzar</p>
                     </div>
-                    <form onSubmit={handleSubmit} className="register-form">
+                    <form onSubmit={registerUser} className="register-form">
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="first_name">Nombre</label>
@@ -70,8 +80,8 @@ const RegisterUser = () => {
                                     id="first_name"
                                     name="first_name"
                                     placeholder="Tu nombre"
-                                    value={formData.first_name.trim()}
-                                    onChange={handleChange}
+                                    value={user.first_name.trim()}
+                                    onChange={(e) => setUser({ ...user, first_name: e.target.value.trim() })}
                                 />
                             </div>
                             <div className="form-group">
@@ -83,8 +93,8 @@ const RegisterUser = () => {
                                     id="last_name"
                                     name="last_name"
                                     placeholder="Tu apellido"
-                                    value={formData.last_name.trim()}
-                                    onChange={handleChange}
+                                    value={user.last_name.trim()}
+                                    onChange={(e) => setUser({ ...user, last_name: e.target.value.trim() })}
                                 />
                             </div>
                         </div>
@@ -97,8 +107,8 @@ const RegisterUser = () => {
                                 id="email"
                                 name="email"
                                 placeholder="tu@email.com"
-                                value={formData.email.trim()}
-                                onChange={handleChange}
+                                value={user.email.trim()}
+                                onChange={(e) => setUser({ ...user, email: e.target.value.trim() })}
                             />
                         </div>
                         <div className="form-row">
@@ -111,8 +121,8 @@ const RegisterUser = () => {
                                     id="age"
                                     name="age"
                                     placeholder="25"
-                                    value={formData.age}
-                                    onChange={handleChange}
+                                    value={user.age}
+                                    onChange={(e) => setUser({ ...user, age: parseInt(e.target.value) || 0 })}
                                 />
                             </div>
                             <div className="form-group">
@@ -124,8 +134,8 @@ const RegisterUser = () => {
                                     id="password"
                                     name="password"
                                     placeholder="Tu contraseña"
-                                    value={formData.password.trim()}
-                                    onChange={handleChange}
+                                    value={user.password.trim()}
+                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
                                 />
                             </div>
                         </div>
@@ -140,7 +150,7 @@ const RegisterUser = () => {
                                 </ul>
                             </small>
                         </div>
-                        <button type="submit" className="btn-register">Crear Cuenta</button>
+                        <button type="submit" className="btn-register" onClick={redict}>Crear Cuenta</button>
                     </form>
                     <div className="register-footer">
                         <p>¿Ya tienes una cuenta? <a href="/users/login">Inicia sesión</a></p>

@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { errorMessag, info, success } from '../components/message/message.jsx';
 import axios from 'axios';
+import { useUserContextOptimized } from './userContextOptimized.jsx';
+import { useNotification } from './notificationContext.jsx';
 
 const AuthContext = createContext();
 
@@ -9,10 +11,12 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
     const [jwt, setJwt] = useState(null);
-    const [role, setRole] = useState(null);
+    const [role, setRole] = useState('');
     const [payload, setPayload] = useState(null);
     const [login, setLogin] = useState({ email: '', password: '' });
 
+    // const { setRoles } = useUserContextOptimized();
+    const notify = useNotification();
     const navigate = useNavigate();
     const rute = 'http://localhost:8000/api/users';
 
@@ -30,6 +34,8 @@ export const AuthContextProvider = ({ children }) => {
 
                 if (accessUser.status === 200) {
                     const usuario = accessUser.data.payload;
+                    console.log('Usuario autenticado:', usuario);
+                    setJwt(token);
                     setPayload(usuario);
                     setRole(usuario?.role);
                     if (usuario?.role === 'admin') {
@@ -37,11 +43,12 @@ export const AuthContextProvider = ({ children }) => {
                     } else {
                         navigate('/');
                     }
-                    success('Login exitoso');
+                    notify.success('Login exitoso');
                 }
             }
         } catch (error) {
-            errorMessag('Error en el login');
+            console.error('Error en el login:', error.response?.data);
+            notify.error('Error en el login');
         }
     };
 
@@ -49,12 +56,11 @@ export const AuthContextProvider = ({ children }) => {
         try {
             await axios.post(`${rute}/logout`, {}, { withCredentials: true });
             setJwt(null);
-            setRole(null);
+            setRole('');
             setPayload(null);
-            navigate('/');
-            success('Sesión cerrada');
+            notify.success('Sesión cerrada');
         } catch (error) {
-            errorMessag('Error al cerrar sesión');
+            notify.error('Error al cerrar sesión');
         }
     };
 
@@ -75,8 +81,8 @@ export const AuthContextProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            jwt, setJwt, role, setRole, payload, setPayload, login,
-            setLogin, handleSubmit, logout, id
+            jwt, setJwt, payload, setPayload, login,
+            setLogin, handleSubmit, logout, id, role, setRole
         }}>
             {children}
         </AuthContext.Provider>

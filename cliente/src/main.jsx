@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { UserContextProvider } from './context/userContext.jsx'
+// import { UserContextProvider } from './context/userContext.jsx'
 import { CarroProvider } from './context/cartContext.jsx'
 import { BrowserRouter } from 'react-router-dom';
 import { OrderProvider } from './context/orderContext.jsx'
@@ -11,10 +11,12 @@ import { ContactProvider } from './context/contactContext.jsx'
 import { SubscriptionProvider } from './context/subscripContext.jsx'
 import { AuthContextProvider } from './context/authContext.jsx'
 import { UserContextOptimizedProvider } from './context/userContextOptimized.jsx'
+import { NotificationProvider } from './context/notificationContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+      <NotificationProvider>
       <AuthContextProvider>
         {/* <UserContextProvider> */}
         <UserContextOptimizedProvider>
@@ -32,6 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </UserContextOptimizedProvider>
         {/* </UserContextProvider> */}
       </AuthContextProvider>
+      </NotificationProvider>
     </BrowserRouter>
   </React.StrictMode>,
 )

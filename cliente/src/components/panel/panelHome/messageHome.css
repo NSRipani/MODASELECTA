@@ -22,6 +22,7 @@
 }
 
 .container{
+    min-height: 100vh;
     background-color: #b6b5b5af;
     margin: 0;
     padding: 2rem;

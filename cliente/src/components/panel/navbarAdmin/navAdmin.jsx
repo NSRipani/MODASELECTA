@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './navAdmin.css';
-import { Link } from 'react-router-dom';
 import useCloseSession from './../../../hook/messageCloseSession.jsx';
-import PanelUser from '../panelUser/panelUser.jsx';
-import PanelProduct from '../panelProduct/panelProduct.jsx';
-import Error404 from '../../error404/error404.jsx';
+// import PanelUser from '../panelUser/panelUser.jsx';
+// import PanelProduct from '../panelProduct/panelProduct.jsx';
+// import Error404 from '../../error404/error404.jsx';
 import MensageHome from '../panelHome/messageHome.jsx';
-import OrderPanel from '../panelOrders/panelOrders.jsx';
+// import OrderPanel from '../panelOrders/panelOrders.jsx';
+import ConfiguracionPanel from '../panelConfig/ConfiguracionPanel.jsx';
 
 const NavAdmin = () => {
     
@@ -18,14 +18,14 @@ const NavAdmin = () => {
     };
     
     const renderComponent = () => {
-        if (view === "usuarios") {
-            return <PanelUser />;
-        } else if (view === "productos") {
-            return <PanelProduct />;
-        } else if (view === "ordenes") {
-            return <OrderPanel />;
-        } else if (view === "configuracion") {
-            return <Error404 />;
+        if (view === "configuracion") {
+        //     return <PanelUser />;
+        // } else if (view === "productos") {
+        //     return <PanelProduct />;
+        // } else if (view === "ordenes") {
+        //     return <OrderPanel />;
+        // } else if (view === "configuracion") {
+            return <ConfiguracionPanel />;
         } else {
             return <MensageHome />;
         }
@@ -33,31 +33,32 @@ const NavAdmin = () => {
 
     return (    
         <div className="todo">
-            <div className="navBar-conteiner">
+            <aside className="navBar-conteiner">
                 <h1>GESTION ADMINISTRATIVA</h1>
-            </div>
-            <div className="navBar">
-                <ul className="btns">
-                    <li className="boton-nav">
-                        <Link id="btn-gestion" to={"/admin"} onClick={ () => handleLinkClick("home")}>Home</Link>
-                    </li>
-                    <li className="boton-nav">
-                        <Link id="btn-gestion" to={"/admin/users"} onClick={ () => handleLinkClick("usuarios")}>Usuarios</Link>
-                    </li>
-                    <li className="boton-nav">
-                        <Link id="btn-gestion" to={"/admin/products"} onClick={ () => handleLinkClick("productos")} >Productos</Link>
-                    </li>
-                    <li className="boton-nav">
-                        <Link id="btn-gestion" to={"/admin/orders"} onClick={ () => handleLinkClick("ordenes")}>Ordenes</Link>
-                    </li>
-                    <li className="boton-nav">
-                        <Link id="btn-gestion" to={"/admin/config"} onClick={() => handleLinkClick("configuracion")}>Configuración</Link>
-                    </li>
-                    <li className="boton-nav">
-                        <Link id="btn-gestion" onClick={confirmLogout}>Cerrar Sesión</Link>
-                    </li> 
-                </ul>
-            </div>
+            
+                <div className="navBar">
+                    <ul className="btns">
+                        <li className="boton-nav">
+                            <button id="btn-gestion" onClick={ () => handleLinkClick("home")}>Home</button>
+                        </li>
+                        {/* <li className="boton-nav">
+                            <button id="btn-gestion" onClick={ () => handleLinkClick("usuarios")}>Usuarios</button>
+                        </li>
+                        <li className="boton-nav">
+                            <button id="btn-gestion" onClick={ () => handleLinkClick("productos")} >Productos</button>
+                        </li>
+                        <li className="boton-nav">
+                            <button id="btn-gestion" onClick={ () => handleLinkClick("ordenes")}>Ordenes</button>
+                        </li> */}
+                        <li className="boton-nav">
+                            <button id="btn-gestion" onClick={() => handleLinkClick("configuracion")}>Configuración</button>
+                        </li>
+                        <li className="boton-nav">
+                            <button id="btn-gestion" onClick={confirmLogout}>Cerrar Sesión</button>
+                        </li> 
+                    </ul>
+                </div>
+            </aside>
             <div>
                 {renderComponent()}       
             </div>

@@ -43,8 +43,8 @@ const Home = () => {
           <h1>Tu Estilo, Tu Personalidad</h1>
           <p>Descubre la colección más exclusiva de indumentaria. Calidad, estilo y comodidad en cada prenda.</p>
           <div className="hero-buttons">
-            <Link to="/products" className="btn-primary">Ver Colección</Link>
-            <Link to="/users/register" className="btn-secondary">Crear Cuenta</Link>
+            <Link to="/products" className="btn-primary-home">Ver Colección</Link>
+            <Link to="/users/register" className="btn-secondary-home">Crear Cuenta</Link>
           </div>
         </div>
         <div className="hero-stats">

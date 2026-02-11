@@ -165,7 +165,7 @@ const ProductDisplay = () => {
                 <div className="products-section">
                     <div className="products-grid">
                         {filteredProducts.map(product => (
-                            <div key={product._id} className="product-card">
+                            <div key={product._id} className="card-product">
                                 <div className="product-image-container">
                                     <img src={product.photo} alt={product.title} onClick={() => openModal(product)} className="image-product" />
                                     <div className="product-overlay">

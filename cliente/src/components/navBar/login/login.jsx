@@ -107,10 +107,7 @@ const Login = () => {
                                     ¿Olvidaste tu contraseña?
                                 </Link>
                             </div>
-
-                            <button type="submit" className="login-btn">
-                                Iniciar Sesión
-                            </button>
+                            <button type="submit" className="login-btn">Iniciar Sesión</button>
                         </form>
 
                         <div className="login-footer">

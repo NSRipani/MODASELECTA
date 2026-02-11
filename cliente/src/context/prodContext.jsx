@@ -3,6 +3,7 @@ import axios from 'axios';
 import { errorMessag, info, success } from '../components/message/message.jsx';
 import { botonNO, botonSI, estilo, fondo } from '../components/message/style/style.jsx';
 import { toast } from 'sonner';
+import { useNotification } from './notificationContext.jsx';
 
 const ProdContext = createContext();
 
@@ -12,12 +13,13 @@ export const ProdProvider = (props) => {
     
     const [prod, setProd] = useState({ title: '', photo: '', category: '', price: 0, stock: 0 });
     const [listProduct, setListProduct] = useState([])
-    const [searchField, setSearchField] = useState("category"); 
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchCategory, setSearchCategory] = useState([]); 
+    const [searchTitle, setSearchTitle] = useState([]);
 
     const rute = 'http://localhost:8000/api/products';
 
-    
+    const notify = useNotification();
+
     const allProd = async () => {
         try {
             const response = await axios.get(`${rute}`, { withCredentials: true });
@@ -25,11 +27,11 @@ export const ProdProvider = (props) => {
 
             if (response.status === 200) {
                 setListProduct(response.data.response);
-                success('¡Lista de productos!')
+                notify.success('¡Lista de productos!')
             }
         } catch (error) {
             console.error('Error al obtener los productos:', error.response);
-            errorMessag('Error al mostrar productos.');
+            notify.error('Error al mostrar productos.');
         }
     };
 
@@ -41,14 +43,14 @@ export const ProdProvider = (props) => {
                 withCredentials: true,
             });
             if (response.status === 201) {
-                success('¡Producto registrado!')
+                notify.success('¡Producto registrado!')
                 setProd({ title: '', photo: '', category: '', price: 0, stock: 0 });
                 setListProduct(response.data)
             }
             console.log(`LLLLLLL ${listProduct}`)
         } catch (error) {
             console.error('Error al registrar el producto:', error.response);
-            errorMessag('Error al registrar el producto. Corrobore los datos');
+            notify.error('Error al registrar el producto. Corrobore los datos');
         }
     };
 
@@ -64,7 +66,7 @@ export const ProdProvider = (props) => {
                 return response.data.response  ;
             } 
         } catch (error) {
-            errorMessag('Error al buscar el producto por ID.');
+            notify.error('Error al buscar el producto por ID.');
             console.error('Error al buscar producto por ID:', error);
             return null;
         }
@@ -78,7 +80,7 @@ export const ProdProvider = (props) => {
                 headers: { "Content-Type": "multipart/form-data" }, 
             });
             if (response.status === 200) {
-                success('¡Producto actualizado con éxito!');
+                notify.success('¡Producto actualizado con éxito!');
                 setListProduct((prevList) =>
                     prevList.map((product) =>
                         product.id === id ? { ...product, ...data } : product
@@ -87,7 +89,7 @@ export const ProdProvider = (props) => {
             }
             setProd({ title: '', photo: '', category: '', price: 0, stock: 0 });
         } catch (error) {
-            errorMessag('Error al actualizar el producto.');
+            notify.error('Error al actualizar el producto.');
             console.error(`Error al actualizar el producto:`, error);
         }
     };
@@ -112,19 +114,19 @@ export const ProdProvider = (props) => {
 
     const deleteProd = async (id) => {
         if (!id) {
-            error('ID de producto no válido')
+            notify.error('ID de producto no válido')
             return;
         }
         const eliminarProducto = async () => {
             try {
                 const response = await axios.delete(`${rute}/${id}`, { withCredentials: true });        
                 if (response.status === 200) {
-                    success('¡Producto eliminado!')
+                    notify.success('¡Producto eliminado!')
                     setListProduct((prevList) => prevList.filter((product) => product.id !== id));
                 }
             } catch (error) {
                 console.error('Error al eliminar el producto:', error);
-                errorMessag('Error al eliminar el producto.')
+                notify.error('Error al eliminar el producto.')
             }
         };
         toast((t) => (
@@ -141,7 +143,7 @@ export const ProdProvider = (props) => {
     
     const hideListProd = () => {
         setListProduct([]);
-        success('Lista de productos oculta.');
+        notify.success('Lista de productos oculta.');
     };
 
     const resetList = () => {
@@ -149,27 +151,39 @@ export const ProdProvider = (props) => {
     }
 
     // --- Buscador conectado al backend ---
-    const handleSearch = async () => {
+    const prodCategory = async () => {
+        if (!searchCategory) return; // evita consultas vacías
         try {
-            let url = "";
-            if (searchField === "category") {
-                url = `http://localhost:8000/api/products/filter?category=${searchTerm}`;
-            } else if (searchField === "title") {
-                url = `http://localhost:8000/api/products/title?title=${searchTerm}`;
-            }
-
-            const res = await axios.get(url, { withCredentials: true });
+            const res = await axios.get(`${rute}/filter?category=${searchCategory}`, { withCredentials: true });
             if (res.status === 200) {
-                setListProduct(res.data.products || []); // ajusta según tu backend
+                // Asumimos que el backend devuelve { products: [...] }
+                // setSearchCategory(res.data.products.map(p => p.category) || []);
+                setListProduct(res.data.products || []);
+                console.log('ListProductCategory: ', res.data.products)
+                console.log('Category: ', res.data.products.map(p => p.category) )
             }
         } catch (error) {
-            console.error("Error en búsqueda:", error);
+            console.error("Error en búsqueda por categoría:", error);
+        }
+    };
+
+    const prodTitle = async () => {
+        if (!searchTitle) return; // evita consultas vacías
+        try {
+            const res = await axios.get(`${rute}/title?title=${searchTitle}`, { withCredentials: true });   
+            if (res.status === 200) {
+                // Asumimos que el backend devuelve { products: [...] }
+                setSearchTitle(res.data.products || []);
+                console.log('ListProductTitle: ', res.data.products)
+            }
+        } catch (error) {
+            console.error("Error en búsqueda por título:", error);
         }
     };
 
     const resetSearch = () => {
-        setSearchTerm("");
-        allProd(); // vuelve a traer todos los productos
+        setSearchTitle([]);
+        setSearchCategory([]);
     };
 
     const updateStock = async (id, newStock) => {
@@ -178,9 +192,9 @@ export const ProdProvider = (props) => {
             setListProduct(res.data)
             console.log('STOCK: ', res.data)
             // refrescar lista
-            allProd();
+            // allProd();
         } catch (error) {
-            errorMessag('Error al actualizar stock');
+            notify.error('Error al actualizar stock');
             console.error("Error al actualizar stock", error);
         }
     };
@@ -191,10 +205,10 @@ export const ProdProvider = (props) => {
             const response = await axios.post(`${rute}/mocks`);
             setListProduct(response.data.created);
             console.log(`MOKS. PRODUCTOS: ${response.data}`)
-            success('Productos agregados')
+            notify.success('Productos agregados')
         } catch (error) {
             console.error(error);
-            errorMessag('Error al crear productos de prueba');
+            notify.error('Error al crear productos de prueba');
         }
     };
 
@@ -203,8 +217,9 @@ export const ProdProvider = (props) => {
         <ProdContext.Provider value={
                 {
                     prod, setProd, listProduct, allProd, createProd, updateProd, deleteProd, hideListProd, resetList,
-                    searchField, setSearchField, searchTerm, setSearchTerm, handleSearch, resetSearch, updateStock,
-                    getProductById, findProductByIdLocal, createMockProducts
+                    searchCategory, setSearchCategory, prodCategory, 
+                    searchTitle, setSearchTitle, prodTitle, resetSearch, 
+                    updateStock, getProductById, findProductByIdLocal, createMockProducts
                 }
             }>
             {props.children}
